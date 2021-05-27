@@ -24,5 +24,5 @@ public interface UserService {
     int modifyUser(User user);
 
     //查询所有用户
-    List<User> queryAllUser();
+    List<User> getAllUser();
 }

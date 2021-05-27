@@ -70,19 +70,19 @@
                 </div>
 
 
-                <div class='col-sm-5'>
-                    <div class="form-group">
-                        <label>选择开始时间：</label>
-                        <button id="download" class="btn btn-primary">导出表格</button>
-                        <!--指定 date标记-->
-                        <div class='input-group date' id='datetimepicker1'>
-                            <input type='text' class="form-control" />
-                            <span class="input-group-addon">
-                            <i class="fa fa-search"></i>
-                    </span>
-                        </div>
-                    </div>
-                </div>
+<!--                <div class='col-sm-5'>-->
+<!--                    <div class="form-group">-->
+<!--                        <label>选择开始时间：</label>-->
+<!--                        <button id="download" class="btn btn-primary">导出表格</button>-->
+<!--                        &lt;!&ndash;指定 date标记&ndash;&gt;-->
+<!--                        <div class='input-group date' id='datetimepicker1'>-->
+<!--                            <input type='text' class="form-control" />-->
+<!--                            <span class="input-group-addon">-->
+<!--                            <i class="fa fa-search"></i>-->
+<!--                    </span>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
 
 
                 <script th:inline="javascript">
@@ -170,7 +170,7 @@
                                     <td th:text="${dailyinfo.getMIsolation()==1?'是':'否'}" ></td>
                                     <td th:text="${dailyinfo.getOutside()==1?'是':'否'}"></td>
                                     <td th:text="${dailyinfo.getTouchInfected()==1?'是':'否'}"></td>
-                                    <td th:text="${dailyinfo.getCross()==1?'是':'否'}"></td>
+                                    <td th:text="${dailyinfo.getCrossed()==1?'是':'否'}"></td>
                                     <td th:text="${dailyinfo.getTravelHRA()==1?'是':'否'}"></td>
                                     <td th:text="${dailyinfo.getTouchHRA()==1?'是':'否'}"></td>
                                     <td th:text="${dailyinfo.getRmIsolation()==1?'是':'否'}"></td>
@@ -181,37 +181,37 @@
 
 
 
-                            <div class="modal-footer" th:if="${pageInfo} ne null">
-                                <div class="col-md-6" >
-                                    当前第 [[${pageInfo.pageNum}]]页,共 [[${pageInfo.pages}]] 页.一共 [[${pageInfo.total}]] 条记录
-                                </div>
-                                <ul class="pagination pull-right no-margin">
-                                    <li th:if="${pageInfo.hasPreviousPage}">
-                                        <a th:onclick="|selectf('1')|" >首页</a>
-                                    </li>
+<!--                            <div class="modal-footer" th:if="${pageInfo} ne null">-->
+<!--                                <div class="col-md-6" >-->
+<!--                                    当前第 [[${pageInfo.pageNum}]]页,共 [[${pageInfo.pages}]] 页.一共 [[${pageInfo.total}]] 条记录-->
+<!--                                </div>-->
+<!--                                <ul class="pagination pull-right no-margin">-->
+<!--                                    <li th:if="${pageInfo.hasPreviousPage}">-->
+<!--                                        <a th:onclick="|selectf('1')|" >首页</a>-->
+<!--                                    </li>-->
 
-                                    <li class="prev" th:if="${pageInfo.hasPreviousPage}">
-                                        <a th:onclick="|selectf('${pageInfo.prePage}')|">
-                                            <i class="ace-icon fa fa-angle-double-left"></i>
-                                        </a>
-                                    </li>
-                                    <!--遍历条数-->
-                                    <li th:each="nav:${pageInfo.navigatepageNums}">
-                                        <a th:onclick="|selectf('${nav}')|"  th:text="${nav}" th:if="${nav != pageInfo.pageNum}"></a>
-                                        <span style="font-weight: bold;background: #6faed9;" th:if="${nav == pageInfo.pageNum}" th:text="${nav}" ></span>
-                                    </li>
+<!--                                    <li class="prev" th:if="${pageInfo.hasPreviousPage}">-->
+<!--                                        <a th:onclick="|selectf('${pageInfo.prePage}')|">-->
+<!--                                            <i class="ace-icon fa fa-angle-double-left"></i>-->
+<!--                                        </a>-->
+<!--                                    </li>-->
+<!--                                    &lt;!&ndash;遍历条数&ndash;&gt;-->
+<!--                                    <li th:each="nav:${pageInfo.navigatepageNums}">-->
+<!--                                        <a th:onclick="|selectf('${nav}')|"  th:text="${nav}" th:if="${nav != pageInfo.pageNum}"></a>-->
+<!--                                        <span style="font-weight: bold;background: #6faed9;" th:if="${nav == pageInfo.pageNum}" th:text="${nav}" ></span>-->
+<!--                                    </li>-->
 
-                                    <li class="next" th:if="${pageInfo.hasNextPage}">
-                                        <a th:onclick="|selectf('${pageInfo.nextPage}')|">
-                                            <i class="ace-icon fa fa-angle-double-right"></i>
-                                        </a>
-                                    </li>
+<!--                                    <li class="next" th:if="${pageInfo.hasNextPage}">-->
+<!--                                        <a th:onclick="|selectf('${pageInfo.nextPage}')|">-->
+<!--                                            <i class="ace-icon fa fa-angle-double-right"></i>-->
+<!--                                        </a>-->
+<!--                                    </li>-->
 
-                                    <li>
-                                        <a th:onclick="|selectf('${pageInfo.pages}')|">尾页</a>
-                                    </li>
-                                </ul>
-                            </div>
+<!--                                    <li>-->
+<!--                                        <a th:onclick="|selectf('${pageInfo.pages}')|">尾页</a>-->
+<!--                                    </li>-->
+<!--                                </ul>-->
+<!--                            </div>-->
                         </div>
                 </div>
             </div>

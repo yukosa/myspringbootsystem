@@ -49,7 +49,7 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public int addUser(User userBean) {
-        int aFlag = userMapper.insertUser(userBean);
+        int aFlag = userMapper.addUser(userBean);
         return aFlag;
     }
 
@@ -82,7 +82,7 @@ public class UserServiceImpl implements UserService {
      * @return
      */
     @Override
-    public List<User> queryAllUser() {
+    public List<User> getAllUser() {
         return userMapper.getAllUser();
     }
 }

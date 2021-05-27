@@ -14,7 +14,7 @@ public interface UserMapper {
     User selectUserById(String id);
 
     //插入新的用户
-    int insertUser(User userBean);
+    int addUser(User userBean);
 
     //删除用户
     int deleteUser(int id);

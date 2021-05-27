@@ -5,6 +5,7 @@
     <select id="getUserById" parameterType="int" resultType="com.example.system.bean.User">
         SELECT * FROM user WHERE id = #{id}
     </select>
+
     <select id="getPwdById" parameterType="int" resultType="String">
         SELECT pwd FROM user WHERE id = #{id}
     </select>
@@ -16,25 +17,25 @@
     <!--根据ID查询用户信息-->
 
 
-    <select resultType="com.example.system.bean.User" parameterType="String" id="selectUserById">SELECT * FROM userWHERE id = #{id}; </select>
+    <select resultType="com.example.system.bean.User" parameterType="int" id="selectUserById">SELECT * FROM userWHERE id = #{id} </select>
 
     <!--插入新用户信息，ID是自动生成的,返回数据库操作影响行数，为0则是失败-->
 
 
-    <insert parameterType="com.example.system.bean.User" id="insertUser">INSERT InTOuser(id,userName,pwd,identity)values(#{id},#{userName},#{pwd},#{identity}); </insert>
+    <insert parameterType="com.example.system.bean.User" id="addUser">INSERT InTO user(id,userName,pwd,identity)values(#{id},#{userName},#{pwd},#{identity}) </insert>
 
     <!--根据ID删除用户，返回数据库操作影响行数，为0则是失败-->
 
 
-    <delete parameterType="int" id="deleteUser">DELETE FROM userWHERE id = #{id}; </delete>
+    <delete parameterType="int" id="deleteUser">DELETE FROM user WHERE id = #{id} </delete>
 
     <!--根据ID修改用户信息，返回数据库操作影响行数，为0则是失败-->
 
 
-    <update parameterType="com.example.system.bean.User" id="updateUser">UPDATE userSET pwd = #{pwd},userName = #{userName},identity = #{identity}WHERE id = #{id}; </update>
+    <update parameterType="com.example.system.bean.User" id="updateUser">UPDATE user SET pwd = #{pwd},userName = #{userName},identity = #{identity}WHERE id = #{id} </update>
 
     <!--查询所有用户信息，返回一个List<Bean>-->
 
 
-    <select resultType="com.example.system.bean.User" id="getAllUser">SELECT * FROM user ; </select>
+    <select resultType="com.example.system.bean.User" id="getAllUser">SELECT * FROM user </select>
 </mapper>

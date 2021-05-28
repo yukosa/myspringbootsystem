@@ -19,7 +19,7 @@ public class DailyinfoServiceImpl implements DailyinfoService{
     DailyinfoMapper dailyinfoMapper;
 
     @Override
-    public Dailyinfo queryById(int id){return dailyinfoMapper.queryById(id);}
+    public List<Dailyinfo> queryById(int id){return dailyinfoMapper.queryById(id);}
 
     @Override
     public List<Dailyinfo> queryAll(){return dailyinfoMapper.queryAll();}
@@ -29,4 +29,7 @@ public class DailyinfoServiceImpl implements DailyinfoService{
 
     @Override
     public Date getMinDate(){return dailyinfoMapper.getMinDate();}
+
+    @Override
+    public Dailyinfo queryByNum(int num){return dailyinfoMapper.queryByNum(num);}
 }

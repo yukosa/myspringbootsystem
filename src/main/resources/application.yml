@@ -1,5 +1,3 @@
-
-
 spring:
   datasource:
     name: emp_manage  #数据库名

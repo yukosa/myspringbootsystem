@@ -11,9 +11,9 @@ import java.util.List;
 @Repository
 public interface DailyinfoMapper {
 
-    Dailyinfo queryById(int id);
+    List<Dailyinfo> queryById(int id);
     List<Dailyinfo> queryAll();
     Date getMaxDate();
     Date getMinDate();
-
+    Dailyinfo queryByNum(int num);
 }

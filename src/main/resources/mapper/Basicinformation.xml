@@ -13,13 +13,13 @@
         INSERT InTO
             basicinformation(id,name,sex,age,idCardNo,phoneNum,college,residence,campus,placeOfOrigin,placeOfDomicile,currentResidence)
         values
-            (#{id},#{name},#{sex},#{age},#{idCardNo},#{phoneNum},#{college},#{residence},#{campus},#{placeOfOrigin},#{placeOfDomicile},#{currentResidence});
+            (#{id},#{name},#{sex},#{age},#{idCardNo},#{phoneNum},#{college},#{residence},#{campus},#{placeOfOrigin},#{placeOfDomicile},#{currentResidence})
     </insert>
 
     <!--根据ID删除用户，返回数据库操作影响行数，为0则是失败-->
     <delete id="deleteUser" parameterType="int">
         DELETE FROM user
-        WHERE id = #{id};
+        WHERE id = #{id}
     </delete>
 
     <!--根据ID修改用户信息，返回数据库操作影响行数，为0则是失败-->
@@ -36,12 +36,12 @@
             placeOfOrigin=#{placeOfOrigin},
             placeOfDomicile=#{placeOfDomicile},
             currentResidence=#{currentResidence}
-        WHERE id = #{id};
+        WHERE id = #{id}
     </update>
 
     <!--查询所有用户信息，返回一个List<Bean>-->
     <select id="getAllUser" resultType="com.example.system.bean.Basicinformation">
-        SELECT * FROM user ;
+        SELECT * FROM user
     </select>
 
 

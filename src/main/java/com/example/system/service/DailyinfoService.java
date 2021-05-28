@@ -6,9 +6,9 @@ import java.util.Date;
 import java.util.List;
 
 public interface DailyinfoService {
-    Dailyinfo queryById(int id);
+    List<Dailyinfo> queryById(int id);
     List<Dailyinfo> queryAll();
     Date getMaxDate();
     Date getMinDate();
-
+    Dailyinfo queryByNum(int num);
 }

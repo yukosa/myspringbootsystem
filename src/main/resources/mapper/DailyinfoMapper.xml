@@ -4,11 +4,11 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.system.mapper.DailyinfoMapper">
 
-    <select id="queryById" resultType="Dailyinfo">
+    <select id="queryById" parameterType="int" resultType="com.example.system.bean.Dailyinfo">
         select * from dailyInfo where id=#{id}
     </select>
 
-    <select id="queryAll" resultType="Dailyinfo">
+    <select id="queryAll" resultType="com.example.system.bean.Dailyinfo">
         select  * from dailyInfo
     </select>
 
@@ -20,4 +20,7 @@
         select min(fillingDate) from dailyInfo
     </select>
 
+    <select id="queryByNum"  resultType="com.example.system.bean.Dailyinfo">
+        select * from dailyInfo where num=#{num}
+    </select>
 </mapper>

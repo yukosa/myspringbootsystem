@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:c="http://www.w3.org/1999/xhtml">
+<head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>Hello, Bootstrap Table!</title>
+
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.17.1/dist/bootstrap-table.min.css">
+</head>
+<body>
+<table data-toggle="table">
+        <thead>
+        <tr>
+                <th>name</th>
+                <th>password</th>
+                <th>uid</th>
+        </tr>
+        </thead>
+        <tbody >
+        <tr  th:each="c:${pageInfo.list}">
+                <td>[[${c.name}]]</td>
+                <td>[[${c.password}]]</td>
+                <td>[[${c.uid}]]</td>
+        </tr>
+
+        </tbody>
+
+</table>
+<br/>
+<div class="modal-footer no-margin-top">
+        <div class="col-md-6">
+                当前第 [[${pageInfo.pageNum}]]页,共 [[${pageInfo.pages}]] 页.一共 [[${pageInfo.total}]] 条记录
+        </div>
+
+        <ul class="pagination pull-right no-margin">
+                <i class="ace-icon fa fa-angle-double-left"></i>
+                <i class="ace-icon fa fa-angle-double-right"></i>
+
+        </ul>
+</div>
+
+<div>当前页号：<span th:text="${pageInfo.pageNum}"></span></div>
+<div>每页条数：<span th:text="${pageInfo.pageSize}"></span></div>
+<div>起始行号：<span th:text="${pageInfo.startRow}"></span></div>
+<div>终止行号：<span th:text="${pageInfo.endRow}"></span></div>
+<div>总结果数：<span th:text="${pageInfo.total}"></span></div>
+<div>总页数：<span th:text="${pageInfo.pages}"></span></div>
+<hr />
+<div>是否为第一页：<span th:text="${pageInfo.isFirstPage}"></span></div>
+<div>是否为最后一页：<span th:text="${pageInfo.isLastPage}"></span></div>
+<div>是否有前一页：<span th:text="${pageInfo.hasPreviousPage}"></span></div>
+<div>是否有下一页：<span th:text="${pageInfo.hasNextPage}"></span></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/bootstrap-table@1.17.1/dist/bootstrap-table.min.js"></script>
+</body>
+</html>

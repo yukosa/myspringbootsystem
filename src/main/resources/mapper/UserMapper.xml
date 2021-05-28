@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.system.mapper.UserMapper">
+
+    <select id="getUserById" parameterType="int" resultType="com.example.system.bean.User">
+        SELECT * FROM user WHERE id = #{id}
+    </select>
+
+    <select id="getPwdById" parameterType="int" resultType="String">
+        SELECT pwd FROM user WHERE id = #{id}
+    </select>
+    <!--验证用户账号和密码-->
+
+
+    <select resultType="com.example.system.bean.User" parameterType="String" id="getInfo">SELECT * FROM userWHERE userName = #{userName}AND pwd = #{pwd}; </select>
+
+    <!--根据ID查询用户信息-->
+
+
+    <select resultType="com.example.system.bean.User" parameterType="int" id="selectUserById">SELECT * FROM userWHERE id = #{id} </select>
+
+    <!--插入新用户信息，ID是自动生成的,返回数据库操作影响行数，为0则是失败-->
+
+
+    <insert parameterType="com.example.system.bean.User" id="addUser">INSERT InTO user(id,userName,pwd,identity)values(#{id},#{userName},#{pwd},#{identity}) </insert>
+
+    <!--根据ID删除用户，返回数据库操作影响行数，为0则是失败-->
+
+
+    <delete parameterType="int" id="deleteUser">DELETE FROM user WHERE id = #{id} </delete>
+
+    <!--根据ID修改用户信息，返回数据库操作影响行数，为0则是失败-->
+
+
+    <update parameterType="com.example.system.bean.User" id="updateUser">UPDATE user SET pwd = #{pwd},userName = #{userName},identity = #{identity}WHERE id = #{id} </update>
+
+    <!--查询所有用户信息，返回一个List<Bean>-->
+
+
+    <select resultType="com.example.system.bean.User" id="getAllUser">SELECT * FROM user </select>
+</mapper>

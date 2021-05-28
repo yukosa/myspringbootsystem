@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.system.mapper.DailyinfoMapper">
+
+    <select id="queryById" resultType="Dailyinfo">
+        select * from dailyInfo where id=#{id}
+    </select>
+
+    <select id="queryAll" resultType="Dailyinfo">
+        select  * from dailyInfo
+    </select>
+
+    <select id="getMaxDate" resultType="Date">
+        select max(fillingDate) from dailyInfo
+    </select>
+
+    <select id="getMinDate" resultType="Date">
+        select min(fillingDate) from dailyInfo
+    </select>
+
+</mapper>

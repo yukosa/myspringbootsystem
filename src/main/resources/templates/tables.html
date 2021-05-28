@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Tables - SB Admin</title>
+
+
+
+        <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+        <link href="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
+        <link href="https://cdn.bootcss.com/bootstrap-select/1.12.1/css/bootstrap-select.min.css" rel="stylesheet">
+        <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+
+        <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+        <script th:src="@{/js/bootstrap.min.js}"></script>
+
+        <script src="https://cdn.bootcss.com/moment.js/2.22.1/moment-with-locales.min.js"></script>
+        <script src="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+
+
+        <link href="https://cdn.bootcdn.net/ajax/libs/font-awesome/5.15.2/css/all.min.css" rel="stylesheet">
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" target="_blank" class="external-link" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/css/bootstrap-select.min.css">
+        <!-- Latest compiled and minified JavaScript -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/bootstrap-select.min.js"></script>
+        <!-- (Optional) Latest compiled and minified JavaScript translation files -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/i18n/defaults-*.min.js"></script>
+
+
+        <!--表格图标等-->
+        <link th:href="@{/css/styles.css}" rel="stylesheet" />
+        <link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet" crossorigin="anonymous" />
+        <link href="https://cdn.bootcss.com/font-awesome/5.13.0/css/all.css" rel="stylesheet">
+
+
+    </head>
+
+    <body class="sb-nav-fixed">
+
+
+    <div th:replace="~{commons/common::nvbar}"></div>
+    <div id="layoutSidenav">
+        <div th:replace="~{commons/common::sidebar}"></div>
+
+
+
+    <div id="layoutSidenav_content">
+        <main>
+
+
+            <script>
+                $("#datetime").datetimepicker({
+                    bootcssVer: 4,
+                    format: 'YYYY-MM-DD HH:mm',
+                    locale: moment.locale('zh-CN'),
+                    defaultDate: "2020-02-09"
+                });
+            </script>
+
+            <div class="container-fluid">
+                <h1 class="mt-4">Tables</h1>
+                <ol class="breadcrumb mb-4">
+                    <li class="breadcrumb-item"><a th:href="@{/templates/teaindex.html}">Dashboard</a></li>
+                    <li class="breadcrumb-item active">Tables</li>
+                </ol>
+                <div class="card mb-4">
+                    <div class="card-body">
+                        公告信息
+                    </div>
+                </div>
+
+
+<!--                <div class='col-sm-5'>-->
+<!--                    <div class="form-group">-->
+<!--                        <label>选择开始时间：</label>-->
+<!--                        <button id="download" class="btn btn-primary">导出表格</button>-->
+<!--                        &lt;!&ndash;指定 date标记&ndash;&gt;-->
+<!--                        <div class='input-group date' id='datetimepicker1'>-->
+<!--                            <input type='text' class="form-control" />-->
+<!--                            <span class="input-group-addon">-->
+<!--                            <i class="fa fa-search"></i>-->
+<!--                    </span>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+
+
+                <script th:inline="javascript">
+                    $('#datetimepicker1').datetimepicker({
+                        format: 'YYYY-MM-DD',
+                        locale: moment.locale('zh-cn'),
+                        minDate: [[${minDate}]],
+                        defaultDate: [[${maxDate}]]
+                    });
+                </script>
+
+
+
+                <div class="col-sm-15 ">
+                    <label class="col-sm-3 control-label">选择展示信息</label>
+                        <select id="selectmenu" name="selectmenu"  multiple class="selectpicker col-sm-10"  data-live-search="false" >
+                            <option id="selectall" value="0">全部</option>
+                            <option value="1">学工号</option>
+                            <option value="2">填报日期</option>
+                            <option value="3">是否打卡</option>
+                            <option value="4">上午体温</option>
+                            <option value="5">下午体温</option>
+                            <option value="6">健康状况</option>
+                            <option value="7">现处位置</option>
+                            <option value="8">具体地址</option>
+                            <option value="9">是否医学隔离</option>
+                            <option value="10">是否外出</option>
+                            <option value="11">是否与确诊/无症状感染者接触</option>
+                            <option value="12">是否与确诊/无症状感染者行程轨迹交叉</option>
+                            <option value="13">是否中高风险地区旅居史</option>
+                            <option value="14">是否中高风险地区人员接触</option>
+                            <option value="15">是否解除医学隔离</option>
+                            <option value="16">是否返校</option>
+                        </select>
+                    <button id="selectconfirm" class="btn btn-primary">确定</button>
+                    <label id="missinfo" class="text-danger" for="selectmenu" style="display: none"></label>
+                </div>
+
+
+                <div class="card mb-4">
+                        <div class="card-header">
+                        每日健康信息
+                        </div>
+                </div>
+                <div class="card-body">
+                        <div class="table-responsive" id="confirmld" th:fragment="ld" >
+                            <!--text-nowrap-->
+                            <table class="table table-bordered "  id="dataTable"  cellspacing="0" >
+                                <thead>
+                                    <tr>
+                                        <th>操作</th>
+                                        <th>学工号</th>
+                                        <th>填报日期</th>
+                                        <th>是否打卡</th>
+                                        <th>上午体温</th>
+                                        <th>下午体温</th>
+                                        <th>健康状况</th>
+                                        <th>现处位置</th>
+                                        <th>具体地址</th>
+                                        <th>是否医学隔离</th>
+                                        <th>是否外出</th>
+                                        <th>是否与确诊/无症状感染者接触</th>
+                                        <th>是否与确诊/无症状感染者行程轨迹交叉</th>
+                                        <th>是否中高风险地区旅居史</th>
+                                        <th>是否中高风险地区人员接触</th>
+                                        <th>是否解除医学隔离</th>
+                                        <th>是否返校</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody >
+                                <tr  th:each="dailyinfo:${dailyinfos}" >
+                                    <td>
+                                        <button class="btn btn-sm btn-primary" >编辑</button>
+                                        <button class="btn btn-sm btn-danger">删除</button>
+                                    </td>
+                                    <td th:text="${dailyinfo.getId()}"></td>
+                                    <td th:text="${#dates.format(dailyinfo.getFillingDate(),'yyyy-MM-dd hh:mm:ss')}"></td>
+                                    <td th:text="${dailyinfo.getFill()==1?'是':'否'}"></td>
+                                    <td th:text="${dailyinfo.getTemOfAm()}"></td>
+                                    <td th:text="${dailyinfo.getTemOfPm()}"></td>
+                                    <td th:text="${dailyinfo.getHealth()}"></td>
+                                    <td th:text="${dailyinfo.getPosition()}"></td>
+                                    <td th:text="${dailyinfo.getAddress()}"></td>
+                                    <td th:text="${dailyinfo.getMIsolation()==1?'是':'否'}" ></td>
+                                    <td th:text="${dailyinfo.getOutside()==1?'是':'否'}"></td>
+                                    <td th:text="${dailyinfo.getTouchInfected()==1?'是':'否'}"></td>
+                                    <td th:text="${dailyinfo.getCrossed()==1?'是':'否'}"></td>
+                                    <td th:text="${dailyinfo.getTravelHRA()==1?'是':'否'}"></td>
+                                    <td th:text="${dailyinfo.getTouchHRA()==1?'是':'否'}"></td>
+                                    <td th:text="${dailyinfo.getRmIsolation()==1?'是':'否'}"></td>
+                                    <td th:text="${dailyinfo.getReturned()==1?'是':'否'}"></td>
+                                </tr>
+                                </tbody>
+                            </table>
+
+
+
+<!--                            <div class="modal-footer" th:if="${pageInfo} ne null">-->
+<!--                                <div class="col-md-6" >-->
+<!--                                    当前第 [[${pageInfo.pageNum}]]页,共 [[${pageInfo.pages}]] 页.一共 [[${pageInfo.total}]] 条记录-->
+<!--                                </div>-->
+<!--                                <ul class="pagination pull-right no-margin">-->
+<!--                                    <li th:if="${pageInfo.hasPreviousPage}">-->
+<!--                                        <a th:onclick="|selectf('1')|" >首页</a>-->
+<!--                                    </li>-->
+
+<!--                                    <li class="prev" th:if="${pageInfo.hasPreviousPage}">-->
+<!--                                        <a th:onclick="|selectf('${pageInfo.prePage}')|">-->
+<!--                                            <i class="ace-icon fa fa-angle-double-left"></i>-->
+<!--                                        </a>-->
+<!--                                    </li>-->
+<!--                                    &lt;!&ndash;遍历条数&ndash;&gt;-->
+<!--                                    <li th:each="nav:${pageInfo.navigatepageNums}">-->
+<!--                                        <a th:onclick="|selectf('${nav}')|"  th:text="${nav}" th:if="${nav != pageInfo.pageNum}"></a>-->
+<!--                                        <span style="font-weight: bold;background: #6faed9;" th:if="${nav == pageInfo.pageNum}" th:text="${nav}" ></span>-->
+<!--                                    </li>-->
+
+<!--                                    <li class="next" th:if="${pageInfo.hasNextPage}">-->
+<!--                                        <a th:onclick="|selectf('${pageInfo.nextPage}')|">-->
+<!--                                            <i class="ace-icon fa fa-angle-double-right"></i>-->
+<!--                                        </a>-->
+<!--                                    </li>-->
+
+<!--                                    <li>-->
+<!--                                        <a th:onclick="|selectf('${pageInfo.pages}')|">尾页</a>-->
+<!--                                    </li>-->
+<!--                                </ul>-->
+<!--                            </div>-->
+                        </div>
+                </div>
+            </div>
+            <footer class="py-4 bg-light mt-auto">
+                <div class="container-fluid">
+                    <div class="d-flex align-items-center justify-content-between small">
+                        <div class="text-muted">Copyright &copy; Your Website 2021</div>
+                        <div>
+                            <a href="#">Privacy Policy</a>
+                            &middot;
+                            <a href="#">Terms &amp; Conditions</a>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </main>
+    </div>
+    </div>
+        <script th:src="@{/js/scripts.js}"></script>
+        <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
+        <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js" crossorigin="anonymous"></script>
+    </body>
+
+
+
+    <script>
+        $('#download').on("click",function (){
+            <!--console.log($("#datetimepicker1").find("input").val());-->
+            var date=$("#datetimepicker1").find("input").val();
+            window.location.href="/user/dailyinfo/download?date="+date;
+            <!--console.log("/user/dailyinfo/download?date="+date);-->
+        });
+    </script>
+    <script>
+        $("#selectconfirm ").on("click",function (){
+            var num=17;
+            var select =$("#selectmenu").val();
+            var x=document.getElementById("missinfo");
+            window.localStorage["select"]=select;
+            if(select.length==0){
+                x.innerHTML="选择至少一项";
+                x.style.display="";
+            }else{
+                x.style.display="none";
+                $('#confirmld').load('/user/dailyinfo/local',function (){
+                    for(var i = 1; i < num;i++) {
+                        hideTable(i);
+                    }
+                    if($.inArray("0", select)!=-1){
+                        $('#selectmenu').selectpicker('val', "0");
+                        for(var i = 1; i < num;i++) {
+                            showTable(i);
+                        }
+                    }else{
+                        for(var i = 0; i < select.length;i++) {
+                            showTable(select[i]);
+                        }
+                    }
+                })
+            }
+        });
+        function hideTable(idx) {
+            $('table th').eq(idx).hide();
+            var table = document.getElementById("dataTable");
+            var trs = table.rows;
+            for(var i = 0, len = trs.length; i < len; i++) {
+                var cell = trs[i].cells[idx];
+                cell.style.display = 'none';
+            }
+        }
+        function showTable(idx) {
+            $('table th').eq(idx).show();
+            var table = document.getElementById("dataTable");
+            var trs = table.rows;
+            for(var i = 0, len = trs.length; i < len; i++) {
+                var cell = trs[i].cells[idx];
+                cell.style.display = '';
+            }
+        }
+    </script>
+    <script type="text/javascript">
+        function selectf(url){
+            url='/user/dailyinfo/local?pageNum='+url;
+            $('#confirmld').load(url,function (){
+                var num=17;
+                var sto=window.localStorage;
+                var select=sto.getItem("select").split(',');
+                if(select!=null){
+                    for(var i = 1; i < num;i++) {
+                        hideTable(i);
+                    }
+                    if($.inArray("0", select)!=-1){
+                        $('#selectmenu').val("0");
+                        for(var i = 1; i < num;i++) {
+                            showTable(i);
+                        }
+                    }else{
+                        $('#selectmenu').selectpicker('val', select);
+                        for(var i = 0; i < select.length;i++) {
+                            showTable(select[i]);
+                        }
+                    }
+                    document.getElementById("confirmld").style.display="";
+                }else{
+                    var x=document.getElementById("missinfo");
+                    x.innerHTML="选择至少一项";
+                    x.style.display="";
+                }
+            });
+        }
+    </script>
+</html>

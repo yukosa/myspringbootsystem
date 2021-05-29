@@ -11,7 +11,7 @@
     <!--插入新用户信息，ID是自动生成的,返回数据库操作影响行数，为0则是失败-->
     <insert id="insertUser" parameterType="com.example.system.bean.Basicinformation">
         INSERT InTO
-            basicinformation(id,name,sex,age,idCardNo,phoneNum,college,residence,campus,placeOfOrigin,placeOfDomicile,currentResidence)
+            basicinformation(id,userName,sex,age,idCardNo,phoneNum,college,residence,campus,placeOfOrigin,placeOfDomicile,currentResidence)
         values
             (#{id},#{name},#{sex},#{age},#{idCardNo},#{phoneNum},#{college},#{residence},#{campus},#{placeOfOrigin},#{placeOfDomicile},#{currentResidence})
     </insert>

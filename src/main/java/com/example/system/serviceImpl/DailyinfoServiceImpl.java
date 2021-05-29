@@ -32,4 +32,7 @@ public class DailyinfoServiceImpl implements DailyinfoService{
 
     @Override
     public Dailyinfo queryByNum(int num){return dailyinfoMapper.queryByNum(num);}
+
+    @Override
+    public int addinfo(Dailyinfo dailyindo){return dailyinfoMapper.addinfo(dailyindo);}
 }

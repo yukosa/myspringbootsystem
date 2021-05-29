@@ -90,31 +90,37 @@ public class dailyinfoController {
         return "student/mydaily";
     }
 
-    @RequestMapping("/user/dailyinfo/local")
-    public String usermanage(Model model,HttpServletRequest request,
-                             @RequestParam(required = false,defaultValue="1",value="pageNum")Integer pageNum,
-                             @RequestParam(defaultValue="5",value="pageSize")Integer pageSize) {
 
+    @RequestMapping("/user/dailyinfo/write")
+    public String dailywrite(Model model,HttpServletRequest request){
 
-        if (pageNum == null) {
-            pageNum = 1;   //设置默认当前页
-        }
-        if (pageNum <= 0) {
-            pageNum = 1;
-        }
-        if (pageSize == null) {
-            pageSize = 5;    //设置默认每页显示的数据数
-        };
-        PageHelper.startPage(pageNum, pageSize);
         try {
-            List<Dailyinfo> dailyinfos= dailyinfoService.queryAll();
-            model.addAttribute("dailyinfos",dailyinfos);
-            PageInfo<Dailyinfo> pageInfo = new PageInfo<Dailyinfo>(dailyinfos, pageSize);
-            model.addAttribute("pageInfo", pageInfo);
+            HttpSession session = request.getSession();       // 获取登录信息
+            Object obj = session.getAttribute("username");
+            if (obj == null) {     // 登录信息为 null，表示没有登录
+                return "redirect:/login";
+            }
+            String loginname = (String) obj;
+            int loginId = Integer.parseInt(loginname);
+            Date date = new Date(System.currentTimeMillis());
+            model.addAttribute("id", loginId);
+            model.addAttribute("date", date);
         } finally {
             PageHelper.clearPage();
         }
-        return "tables::ld";
+
+        return "student/dailywrite";
+    }
+
+    @GetMapping("/user/dailyinfo/write/add")
+    public String toAddpage(){
+        return "student/dailyquerry";
+    }
+    @PostMapping("/user/dailyinfo/write/add")
+    public String AddInfo(Dailyinfo dailyinfo){
+        dailyinfoService.addinfo(dailyinfo);
+
+        return "redirect:/user/dailyinfo/querry";
     }
 
 

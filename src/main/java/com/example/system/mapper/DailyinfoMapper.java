@@ -1,6 +1,7 @@
 package com.example.system.mapper;
 
 import com.example.system.bean.Dailyinfo;
+import com.example.system.bean.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
@@ -16,4 +17,5 @@ public interface DailyinfoMapper {
     Date getMaxDate();
     Date getMinDate();
     Dailyinfo queryByNum(int num);
+    int addinfo(Dailyinfo dailyindo);
 }

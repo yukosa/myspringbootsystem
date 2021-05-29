@@ -23,4 +23,9 @@
     <select id="queryByNum"  resultType="com.example.system.bean.Dailyinfo">
         select * from dailyInfo where num=#{num}
     </select>
+
+    <insert parameterType="com.example.system.bean.Dailyinfo" id="addinfo">
+        INSERT InTO dailyinfo(id,fillingDate,fill,temOfAm,temOfPm,health,position,address,mIsolation,outside,touchInfected,crossed,travelHRA,touchHRA,returned)
+        values(#{id},CURRENT_TIMESTAMP,#{fill},#{temOfAm},#{temOfPm},#{health},#{position},#{address},#{mIsolation},#{outside},#{touchInfected},#{crossed},#{travelHRA},#{touchHRA},#{returned})
+    </insert>
 </mapper>

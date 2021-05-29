@@ -17,7 +17,7 @@ public class BasicinformationServiceImpl implements BasicinformationService {
 
     //根据ID查询用户信息
     @Override
-    public Basicinformation selectUserById(String id) { return basicinformationMapper.selectUserById(id); }
+    public Basicinformation selectUserById(int id) { return basicinformationMapper.selectUserById(id); }
 
     //插入新的用户信息
     public int insertUser(Basicinformation info){return basicinformationMapper.insertUser(info);}

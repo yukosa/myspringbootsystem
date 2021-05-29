@@ -3,8 +3,8 @@
 <mapper namespace="com.example.system.mapper.BasicinformationMapper">
 
     <!--根据ID查询用户信息-->
-    <select id="selectUserById" parameterType="String" resultType="com.example.system.bean.Basicinformation">
-        SELECT * FROM user
+    <select id="selectUserById" parameterType="int" resultType="com.example.system.bean.Basicinformation">
+        SELECT * FROM basicinformation
         WHERE id = #{id};
     </select>
 
@@ -18,13 +18,13 @@
 
     <!--根据ID删除用户，返回数据库操作影响行数，为0则是失败-->
     <delete id="deleteUser" parameterType="int">
-        DELETE FROM user
+        DELETE FROM basicinformation
         WHERE id = #{id}
     </delete>
 
     <!--根据ID修改用户信息，返回数据库操作影响行数，为0则是失败-->
     <update id="updateUser" parameterType="com.example.system.bean.Basicinformation">
-        UPDATE user
+        UPDATE basicinformation
         SET name=#{name},
             sex=#{sex},
             age=#{age},
@@ -41,7 +41,7 @@
 
     <!--查询所有用户信息，返回一个List<Bean>-->
     <select id="getAllUser" resultType="com.example.system.bean.Basicinformation">
-        SELECT * FROM user
+        SELECT * FROM basicinformation
     </select>
 
 

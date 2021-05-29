@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface BasicinformationService {
     //根据ID查询用户信息
-    Basicinformation selectUserById(String id);
+    Basicinformation selectUserById(int id);
 
     //插入新的用户信息
     int insertUser(Basicinformation info);

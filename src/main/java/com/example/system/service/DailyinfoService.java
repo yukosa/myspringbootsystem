@@ -11,4 +11,5 @@ public interface DailyinfoService {
     Date getMaxDate();
     Date getMinDate();
     Dailyinfo queryByNum(int num);
+    int addinfo(Dailyinfo dailyindo);
 }

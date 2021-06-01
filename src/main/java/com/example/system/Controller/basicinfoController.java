@@ -31,7 +31,6 @@ public class basicinfoController {
 
     @RequestMapping("/user/basicinformation")
     public String basicwrite(Model model,HttpServletRequest request){
-
         try {
             HttpSession session = request.getSession();       // 获取登录信息
             Object obj = session.getAttribute("username");

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Charts - SB Admin</title>
+        <link th:href="@{/css/styles.css}" rel="stylesheet" />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
+    </head>
+    <body class="sb-nav-fixed">
+
+    <div th:replace="~{commons/tcommon::nvbar}"></div>
+    <div id="layoutSidenav">
+        <div th:replace="~{commons/tcommon::sidebar}"></div>
+
+            <div id="layoutSidenav_content">
+                <main>
+                    <div class="container-fluid">
+                        <h1 class="mt-4">公告</h1>
+                        <ol class="breadcrumb mb-4">
+                            <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+                            <li class="breadcrumb-item active">公告</li>
+                        </ol>
+                        <div class="card mb-4" >
+                            <div id="state" class="card-body" th:text="${msg}==null?'等待提交':'提交成功'" >
+                                公告栏状态
+                            </div>
+                        </div>
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <i class="fas fa-chart-area mr-1"></i>
+                                发布公告
+                            </div>
+                            <div class="card-body">
+                                <form role="form" th:action="@{/user/forms}" method="post">
+                                    <div class="form-group">
+                                        <label for="title"><strong>公告标题</strong></label>
+                                        <input id="title" type="text" class="form-control" placeholder="请输入标题" name="title">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="content"><strong>公告内容</strong></label>
+                                        <textarea id="content" class="form-control" rows="3" placeholder="请输入内容"name="content"></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="radio-inline">
+                                            <input type="radio" name="noticeType"  value="日常公告" checked> 日常公告
+                                        </label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="noticeType"  value="紧急公告"> 紧急公告
+                                        </label>
+                                        <label class="radio-inline">
+                                            <input  type="hidden" id="noticeTime" name="noticeTime">
+                                        </label>
+                                    </div>
+                                    <div class="form-group-">
+                                        <div class="col-sm-offset-2 col-sm-10">
+                                            <button id="subm" type="submit" class="btn btn-primary">提交</button>
+                                            <button  onclick="sreset()"  type="button" class="btn btn-danger">重置</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="card-footer small text-muted">Updated</div>
+                        </div>
+                    </div>
+                </main>
+                <footer class="py-4 bg-light mt-auto">
+                    <div class="container-fluid">
+                        <div class="d-flex align-items-center justify-content-between small">
+                            <div class="text-muted">Copyright &copy; Your Website 2021</div>
+                            <div>
+                                <a href="#">Privacy Policy</a>
+                                &middot;
+                                <a href="#">Terms &amp; Conditions</a>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+            </div>
+        </div>
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+        <script th:src="@{/js/scripts.js}"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
+    </body>
+
+
+    <script>
+        $('#subm').on("click",function (){
+            document.getElementById("noticeTime").setAttribute("value",new Date());
+            //console.log(new Date());
+        });
+        function sreset(){
+            var state=document.getElementById("state");
+            state.innerText="等待提交";
+            $('#title').val("");
+            $('#content').val("");
+        }
+    </script>
+
+</html>

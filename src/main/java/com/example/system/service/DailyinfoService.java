@@ -7,9 +7,14 @@ import java.util.List;
 
 public interface DailyinfoService {
     List<Dailyinfo> queryById(int id);
+
     List<Dailyinfo> queryAll();
+
     Date getMaxDate();
+
     Date getMinDate();
+
     Dailyinfo queryByNum(int num);
+
     int addinfo(Dailyinfo dailyindo);
 }

@@ -62,7 +62,9 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <h2><a class = "btn btn-sm btn-success" th:href="@{/user/manage/basicinfo/add}">添加用户信息</a></h2>
+                    <h2><a class = "btn btn-sm btn-success" th:href="@{/user/manage/mbasicinfo/add}">添加用户信息</a>
+                        <a class = "btn btn-sm btn-success" th:href="@{/user/manage/mbasicinfo/downloadexcel}">导出excel</a>
+                    </h2>
                     <div class="table-responsive" id="confirmld" th:fragment="ld">
                         <!--text-nowrap-->
                         <table class="table table-bordered " id="dataTable" cellspacing="0">
@@ -83,13 +85,13 @@
                             <tbody>
                             <tr th:each="basicinfo:${pageInfo.getList()}">
                                 <td>
-                                    <a class = "btn btn-sm btn-primary" th:href="@{/user/manage/muser/edit/}+${basicinfo.getId()}">编辑</a>
-                                    <a class = "btn btn-sm btn-danger" th:href="@{/user/manage/muser/delete/}+${basicinfo.getId()}">删除</a>
+                                    <a class = "btn btn-sm btn-primary" th:href="@{/user/manage/mbasicinfo/edit/}+${basicinfo.getId()}">编辑</a>
+                                    <a class = "btn btn-sm btn-danger" th:href="@{/user/manage/mbasicinfo/delete/}+${basicinfo.getId()}">删除</a>
 <!--                                    <button class="btn btn-sm btn-primary"  th:href="@{/user/manage/muser/edit}>编辑</button>-->
 <!--                                    <button class="btn btn-sm btn-danger"   th:href="@{/user/manage/muser/delete} >删除</button>-->
                                 </td>
                                 <td th:text="${basicinfo.getId()}"></td>
-                                <td th:text="${basicinfo.getUserName()}"></td>
+                                <td th:text="${basicinfo.getName()}"></td>
                                 <td th:text="${basicinfo.getSex()}"></td>
                                 <td th:text="${basicinfo.getAge()}"></td>
                                 <td th:text="${basicinfo.getPhoneNum()}"></td>

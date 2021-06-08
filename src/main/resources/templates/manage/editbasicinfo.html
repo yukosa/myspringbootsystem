@@ -48,32 +48,40 @@
     <div id="layoutSidenav_content">
         <main>
             <div class="container-fluid">
-                <h1 class="mt-4">增加用户</h1>
+                <h1 class="mt-4">编辑用户基本信息</h1>
                 <ol class="breadcrumb mb-4">
                     <li class="breadcrumb-item"><a th:href="@{/manindex.html}">Dashboard</a></li>
-                    <li class="breadcrumb-item"><a th:href="@{/user/manage/basicinfo}">用户基本信息管理</a></li>
-                    <li class="breadcrumb-item active">增加用户</li>
+                    <li class="breadcrumb-item"><a th:href="@{/user/manage/muser}">用户基本信息管理</a></li>
+                    <li class="breadcrumb-item active">编辑用户基本信息</li>
                 </ol>
-            <form class="form-horizontal" th:action="@{/user/manage/basicinfo/add}" method="post">
+            <form class="form-horizontal" th:action="@{/user/manage/mbasicinfo/edit}" method="post">
                 <div class="form-group">
                     <label  class="col-sm-2 control-label">学工号</label>
                     <div class="col-sm-10">
-                        <input class="form-control"  name = "id">
+                        <input th:value = " ${basicinfo.getId()}" readonly="readonly" class="form-control"  name = "id" >
                     </div>
                 </div>
+
                 <div class="form-group">
                     <label  class="col-sm-2 control-label">姓名</label>
                     <div class="col-sm-10">
-                        <input class="form-control"  name = "name">
+                        <input class="form-control"  name = "name" th:value="${basicinfo.getName()}" type="text">
                     </div>
                 </div>
+
+<!--                <div class="form-group">-->
+<!--                    <label for="inputPassword3" class="col-sm-2 control-label">性别</label>-->
+<!--                    <div class="col-sm-10">-->
+<!--                        <input type="password" class="form-control" id="inputPassword3" th:value="${basicinfo.getSex()} "name = "pwd">-->
+<!--                    </div>-->
+<!--                </div>-->
                 <div class="form-group">
                     <label  class="col-sm-2 control-label">性别</label>
                     <div class="col-sm-10">
                         <select class="form-control" name = "sex">
-                            <option value="男">男</option>
-                            <option value="女">女</option>
-<!--                            <option value="2">管理员</option>-->
+                            <option th:selected="${basicinfo.getSex()=='男'}" value="男">男</option>
+                            <option th:selected="${basicinfo.getSex()=='女'}" value="女">女</option>
+                            <!--                            <option value="2">管理员</option>-->
                         </select>
                         <!--                        <input class="form-control"  name = "identity"placeholder="学生（0），教师（1），管理员（2）">-->
                     </div>
@@ -81,91 +89,91 @@
                 <div class="form-group">
                     <label  class="col-sm-2 control-label">年龄</label>
                     <div class="col-sm-10">
-                        <input class="form-control"  name = "age">
+                        <input class="form-control"  name = "age" th:value="${basicinfo.getAge()}" >
                     </div>
                 </div>
                 <div class="form-group">
                     <label  class="col-sm-2 control-label">身份证号</label>
                     <div class="col-sm-10">
-                        <input class="form-control"  name = "idCardNo">
+                        <input class="form-control"  name = "idCardNo" th:value="${basicinfo.getIdCardNo()}">
                     </div>
                 </div>
                 <div class="form-group">
                     <label  class="col-sm-2 control-label">电话号码</label>
                     <div class="col-sm-10">
-                        <input class="form-control"  name = "phoneNum">
+                        <input class="form-control"  name = "phoneNum" th:value="${basicinfo.getPhoneNum()}">
                     </div>
                 </div>
                 <div class="form-group">
                     <label  class="col-sm-2 control-label">学院</label>
                     <div class="col-sm-10">
-                        <input class="form-control"  name = "college">
+                        <input class="form-control"  name = "college" th:value="${basicinfo.getCollege()}">
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label  class="col-sm-2 control-label">住所</label>
                     <div class="col-sm-10">
-                    <input class="form-control"  name = "residence">
-<!--                        <select class="form-control" name = "residence">-->
-<!--                            <option value="0">学生</option>-->
-<!--                            <option value="1">教师</option>-->
-<!--                            <option value="2">管理员</option>-->
-<!--                        </select>-->
-<!--                        <input class="form-control"  name = "identity"placeholder="学生（0），教师（1），管理员（2）">-->
+                        <input class="form-control"  name = "residence" th:value="${basicinfo.getResidence()}">
+                        <!--                        <select class="form-control" name = "residence">-->
+                        <!--                            <option value="0">学生</option>-->
+                        <!--                            <option value="1">教师</option>-->
+                        <!--                            <option value="2">管理员</option>-->
+                        <!--                        </select>-->
+                        <!--                        <input class="form-control"  name = "identity"placeholder="学生（0），教师（1），管理员（2）">-->
                     </div>
                 </div>
                 <div class="form-group">
                     <label  class="col-sm-2 control-label">校区</label>
                     <div class="col-sm-10">
-                        <input class="form-control"  name = "campus">
-<!--                        <select class="form-control" name = "campus">-->
-<!--                            <option value="0">学生</option>-->
-<!--                            <option value="1">教师</option>-->
-<!--                            <option value="2">管理员</option>-->
-<!--                        </select>-->
+                        <input class="form-control"  name = "campus" th:value="${basicinfo.getCampus()}">
+                        <!--                        <select class="form-control" name = "campus">-->
+                        <!--                            <option value="0">学生</option>-->
+                        <!--                            <option value="1">教师</option>-->
+                        <!--                            <option value="2">管理员</option>-->
+                        <!--                        </select>-->
                         <!--                        <input class="form-control"  name = "identity"placeholder="学生（0），教师（1），管理员（2）">-->
                     </div>
                 </div>
                 <div class="form-group">
                     <label  class="col-sm-2 control-label">原籍地</label>
                     <div class="col-sm-10">
-                        <input class="form-control"  name = "placeOfOrgin">
-<!--                        <select class="form-control" name = "placeOfOrgin">-->
-<!--                            <option value="0">学生</option>-->
-<!--                            <option value="1">教师</option>-->
-<!--                            <option value="2">管理员</option>-->
-<!--                        </select>-->
+                        <input class="form-control"  name = "placeOfOrgin" th:value="${basicinfo.getPlaceOfOrigin()}">
+                        <!--                        <select class="form-control" name = "placeOfOrgin">-->
+                        <!--                            <option value="0">学生</option>-->
+                        <!--                            <option value="1">教师</option>-->
+                        <!--                            <option value="2">管理员</option>-->
+                        <!--                        </select>-->
                         <!--                        <input class="form-control"  name = "identity"placeholder="学生（0），教师（1），管理员（2）">-->
                     </div>
                 </div>
                 <div class="form-group">
                     <label  class="col-sm-2 control-label">现户籍地</label>
                     <div class="col-sm-10">
-                        <input class="form-control"  name = "placeOfDomicile">
-<!--                        <select class="form-control" name = "placeOfDomicile">-->
-<!--                            <option value="0">学生</option>-->
-<!--                            <option value="1">教师</option>-->
-<!--                            <option value="2">管理员</option>-->
-<!--                        </select>-->
+                        <input class="form-control"  name = "placeOfDomicile" th:value="${basicinfo.getPlaceOfDomicile()}">
+                        <!--                        <select class="form-control" name = "placeOfDomicile">-->
+                        <!--                            <option value="0">学生</option>-->
+                        <!--                            <option value="1">教师</option>-->
+                        <!--                            <option value="2">管理员</option>-->
+                        <!--                        </select>-->
                         <!--                        <input class="form-control"  name = "identity"placeholder="学生（0），教师（1），管理员（2）">-->
                     </div>
                 </div>
                 <div class="form-group">
                     <label  class="col-sm-2 control-label">现居所</label>
                     <div class="col-sm-10">
-                        <input class="form-control"  name = "currentResidence">
-<!--                        <select class="form-control" name = "currentResidence">-->
-<!--                            <option value="0">学生</option>-->
-<!--                            <option value="1">教师</option>-->
-<!--                            <option value="2">管理员</option>-->
-<!--                        </select>-->
+                        <input class="form-control"  name = "currentResidence" th:value="${basicinfo.getCurrentResidence()}">
+                        <!--                        <select class="form-control" name = "currentResidence">-->
+                        <!--                            <option value="0">学生</option>-->
+                        <!--                            <option value="1">教师</option>-->
+                        <!--                            <option value="2">管理员</option>-->
+                        <!--                        </select>-->
                         <!--                        <input class="form-control"  name = "identity"placeholder="学生（0），教师（1），管理员（2）">-->
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">
-                        <button type="submit" class="btn btn-default">提交</button>
+                        <button type="submit" class="btn btn-default">更新</button>
                     </div>
                 </div>
             </form>

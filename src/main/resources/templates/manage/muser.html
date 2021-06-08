@@ -49,14 +49,6 @@
         <main>
 
 
-<!--            <script>-->
-<!--                $("#datetime").datetimepicker({-->
-<!--                    bootcssVer: 4,-->
-<!--                    format: 'YYYY-MM-DD HH:mm',-->
-<!--                    locale: moment.locale('zh-CN'),-->
-<!--                    defaultDate: "2020-02-09"-->
-<!--                });-->
-<!--            </script>-->
 
             <div class="container-fluid">
                 <h1 class="mt-4">用户信息管理</h1>
@@ -64,37 +56,6 @@
                     <li class="breadcrumb-item"><a th:href="@{/manage/manindex}">Dashboard</a></li>
                     <li class="breadcrumb-item active">用户信息管理</li>
                 </ol>
-<!--                <div class="card mb-4">-->
-<!--                    <div class="card-body">-->
-<!--                        公告信息-->
-<!--                    </div>-->
-<!--                </div>-->
-
-
-<!--                <script th:inline="javascript">-->
-<!--                    $('#datetimepicker1').datetimepicker({-->
-<!--                        format: 'YYYY-MM-DD',-->
-<!--                        locale: moment.locale('zh-cn'),-->
-<!--                        minDate: [[${minDate}]],-->
-<!--                        defaultDate: [[${maxDate}]]-->
-<!--                    });-->
-<!--                </script>-->
-
-
-<!--                <div class="col-sm-15 ">-->
-<!--                    <label class="col-sm-3 control-label">选择展示信息</label>-->
-<!--                    <select id="selectmenu" name="selectmenu" multiple class="selectpicker col-sm-10"-->
-<!--                            data-live-search="false">-->
-<!--                        <option id="selectall" value="0">全部</option>-->
-<!--                        <option value="1">学工号</option>-->
-<!--                        <option value="2">用户姓名</option>-->
-<!--                        <option value="3">用户密码</option>-->
-<!--                        <option value="4">用户身份</option>-->
-<!--                    </select>-->
-<!--                    <button id="selectconfirm" class="btn btn-primary">确定</button>-->
-<!--                    <label id="missinfo" class="text-danger" for="selectmenu" style="display: none"></label>-->
-<!--                </div>-->
-
 
                 <div class="card mb-4">
                     <div class="card-header">
@@ -102,7 +63,10 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <h2><a class = "btn btn-sm btn-success" th:href="@{/user/manage/muser/add}">添加员工</a></h2>
+                    <h2><a class = "btn btn-sm btn-success" th:href="@{/user/manage/muser/add}">添加用户</a>
+                        <a class = "btn btn-sm btn-success" th:href="@{/user/manage/muser/downloadexcel}">导出excel</a>
+                    </h2>
+<!--                    <h2></h2>-->
                     <div class="table-responsive" id="confirmld" th:fragment="ld">
                         <!--text-nowrap-->
                         <table class="table table-bordered " id="dataTable" cellspacing="0">

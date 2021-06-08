@@ -11,7 +11,7 @@ import java.util.Date;
 @NoArgsConstructor
 public class Basicinformation {
     private int id;
-    private String userName;
+    private String name;
     private String sex;
     private int age;
     private String idCardNo;

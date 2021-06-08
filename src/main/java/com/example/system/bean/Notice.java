@@ -16,3 +16,4 @@ public class Notice {
     String content;
     Date time;
 }
+

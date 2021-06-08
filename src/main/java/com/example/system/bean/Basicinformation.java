@@ -9,8 +9,6 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-
-
 public class Basicinformation {
     private int id;
     private String userName;

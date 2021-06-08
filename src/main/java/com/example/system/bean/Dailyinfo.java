@@ -26,20 +26,72 @@ public class Dailyinfo {
     private Byte travelHRA;
     private Byte touchHRA;
     private Byte returned;
-    public int getNum(){return num ;};
-    public int getId(){return id ;};
-    public Date getFillingDate(){return fillingDate;}
-    public Byte getFill(){return fill;}
-    public double getTemOfAm(){return temOfAm;}
-    public double getTemOfPm(){return temOfPm;}
-    public String getHealth(){return health;}
-    public String getPosition(){return position;}
-    public String getAddress(){return address;}
-    public Byte getMIsolation(){return mIsolation ;}
-    public Byte getOutside(){return outside ;}
-    public Byte getTouchInfected(){return touchInfected;}
-    public Byte getCrossed(){return crossed;}
-    public Byte getTravelHRA(){return travelHRA;}
-    public Byte getTouchHRA(){return touchHRA;}
-    public Byte getReturned(){return returned;}
+
+    public int getNum() {
+        return num;
+    }
+
+    ;
+
+    public int getId() {
+        return id;
+    }
+
+    ;
+
+    public Date getFillingDate() {
+        return fillingDate;
+    }
+
+    public Byte getFill() {
+        return fill;
+    }
+
+    public double getTemOfAm() {
+        return temOfAm;
+    }
+
+    public double getTemOfPm() {
+        return temOfPm;
+    }
+
+    public String getHealth() {
+        return health;
+    }
+
+    public String getPosition() {
+        return position;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public Byte getMIsolation() {
+        return mIsolation;
+    }
+
+    public Byte getOutside() {
+        return outside;
+    }
+
+    public Byte getTouchInfected() {
+        return touchInfected;
+    }
+
+    public Byte getCrossed() {
+        return crossed;
+    }
+
+    public Byte getTravelHRA() {
+        return travelHRA;
+    }
+
+    public Byte getTouchHRA() {
+        return touchHRA;
+    }
+
+    public Byte getReturned() {
+        return returned;
+    }
 }

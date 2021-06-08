@@ -22,7 +22,7 @@ public class loginController {
     public String login(@RequestParam("username")String username, @RequestParam("password")String password, Model model, HttpSession session){
 //        System.out.println("testsasd asdasdssssssssssss");
         User user = userService.getUserById(Integer.parseInt(username));
-        if(!StringUtils.isEmpty(username)&&user.getPwd().equals(password)){
+        if(user!=null&&!StringUtils.isEmpty(username)&&user.getPwd().equals(password)){
             session.setAttribute("username",username);
             session.setAttribute("identity",user.getIdentity());
             return "redirect:/index";

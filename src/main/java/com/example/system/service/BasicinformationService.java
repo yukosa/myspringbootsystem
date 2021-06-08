@@ -4,6 +4,8 @@ import com.example.system.bean.Basicinformation;
 
 import java.util.List;
 
+
+
 public interface BasicinformationService {
     //根据ID查询用户信息
     Basicinformation selectUserById(int id);

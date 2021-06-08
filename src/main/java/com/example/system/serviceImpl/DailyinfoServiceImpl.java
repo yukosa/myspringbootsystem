@@ -14,25 +14,37 @@ import java.util.List;
 
 
 @Service
-public class DailyinfoServiceImpl implements DailyinfoService{
+public class DailyinfoServiceImpl implements DailyinfoService {
     @Autowired
     DailyinfoMapper dailyinfoMapper;
 
     @Override
-    public List<Dailyinfo> queryById(int id){return dailyinfoMapper.queryById(id);}
+    public List<Dailyinfo> queryById(int id) {
+        return dailyinfoMapper.queryById(id);
+    }
 
     @Override
-    public List<Dailyinfo> queryAll(){return dailyinfoMapper.queryAll();}
+    public List<Dailyinfo> queryAll() {
+        return dailyinfoMapper.queryAll();
+    }
 
     @Override
-    public Date getMaxDate(){return dailyinfoMapper.getMaxDate();}
+    public Date getMaxDate() {
+        return dailyinfoMapper.getMaxDate();
+    }
 
     @Override
-    public Date getMinDate(){return dailyinfoMapper.getMinDate();}
+    public Date getMinDate() {
+        return dailyinfoMapper.getMinDate();
+    }
 
     @Override
-    public Dailyinfo queryByNum(int num){return dailyinfoMapper.queryByNum(num);}
+    public Dailyinfo queryByNum(int num) {
+        return dailyinfoMapper.queryByNum(num);
+    }
 
     @Override
-    public int addinfo(Dailyinfo dailyindo){return dailyinfoMapper.addinfo(dailyindo);}
+    public int addinfo(Dailyinfo dailyindo) {
+        return dailyinfoMapper.addinfo(dailyindo);
+    }
 }

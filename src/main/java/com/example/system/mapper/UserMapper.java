@@ -2,8 +2,11 @@ package com.example.system.mapper;
 
 import com.example.system.bean.User;
 import org.apache.ibatis.annotations.Mapper;
+import org.springframework.stereotype.Repository;
+
 import java.util.List;
 @Mapper
+@Repository
 public interface UserMapper {
     User getUserById(int id);
     String getPwdById(int id);

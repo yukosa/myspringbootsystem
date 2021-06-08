@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.system.mapper.DailyinfoExcelMapper">
+
+    <select id="queryAll" resultType="DailyinfoExcel">
+        select  * from dailyInfo
+    </select>
+
+    <select id="queryByDate" parameterType="String" resultType="DailyinfoExcel">
+        SELECT * FROM dailyinfo WHERE DATE_FORMAT(fillingDate,'%Y-%m-%d') = #{date}
+    </select>
+
+
+</mapper>

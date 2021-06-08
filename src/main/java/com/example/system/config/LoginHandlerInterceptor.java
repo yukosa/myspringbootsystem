@@ -4,6 +4,7 @@ import com.example.system.bean.User;
 import com.example.system.service.UserService;
 import org.apache.tomcat.util.bcel.Const;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.thymeleaf.util.StringUtils;
 
@@ -11,11 +12,15 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
+@Component
 public class LoginHandlerInterceptor implements HandlerInterceptor {
 
-    @Autowired
+//    @Autowired
     UserService userService;
+    public LoginHandlerInterceptor(UserService userService){
+        super();
+        this.userService = userService;
+    }
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         // 获得cookie
@@ -32,7 +37,7 @@ public class LoginHandlerInterceptor implements HandlerInterceptor {
         String cookie_username = null;
         // 获取cookie里面的一些用户信息
         for (Cookie item : cookies) {
-            System.out.println(item.getName()+" ???"+item.getValue());
+//            System.out.println(item.getName()+" ???"+item.getValue());
 //            System.out.println(item.getName()+"");
             if ("cookie_username".equals(item.getName())) {
                 cookie_username = item.getValue();
@@ -56,6 +61,8 @@ public class LoginHandlerInterceptor implements HandlerInterceptor {
 
         if (null == obj) {
             // 根据用户登录账号获取数据库中的用户信息
+            System.out.println("now  "+cookie_username);
+            System.out.println(Integer.parseInt(cookie_username));
             User user = userService.getUserById(Integer.parseInt(cookie_username));
             // 将用户保存到session中
             session.setAttribute("username", cookie_username);

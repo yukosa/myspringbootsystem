@@ -21,8 +21,8 @@ class SystemApplicationTests {
     @Test
     void contextLoads() {
 //        List<Dailyinfo> dailyinfos=dailyinfoService.queryAll();
-        List<User> users = userService.getAllUser();
-        System.out.println(users);
+        User user = userService.getUserById(2);
+        System.out.println(user);
 
 
 //        User user1 = userService.getUserById(1827405075);

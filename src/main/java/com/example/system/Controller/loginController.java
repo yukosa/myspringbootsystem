@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.thymeleaf.util.StringUtils;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 @Controller
@@ -19,22 +22,45 @@ public class loginController {
     @Autowired
     UserService userService;
     @PostMapping("/user/login")
-    public String login(@RequestParam("username")String username, @RequestParam("password")String password, Model model, HttpSession session){
-//        System.out.println("testsasd asdasdssssssssssss");
+    public String login(@RequestParam("username")String username, @RequestParam("password")String password, Model model, HttpSession session, HttpServletRequest request, HttpServletResponse response){
         User user = userService.getUserById(Integer.parseInt(username));
         if(user!=null&&!StringUtils.isEmpty(username)&&user.getPwd().equals(password)){
+            System.out.println("testsasd asdasdssssssssssss");
+
+            Cookie cookie_username = new Cookie("cookie_username",username);
+            // 设置cookie的持久化时间，30天
+            cookie_username.setMaxAge(30 * 24 * 60 * 60);
+            // 设置为当前项目下都携带这个cookie
+            cookie_username.setPath("/");
+            // 向客户端发送cookie
+            response.addCookie(cookie_username);
             session.setAttribute("username",username);
             session.setAttribute("identity",user.getIdentity());
+//            Coolie
             return "redirect:/index";
-//            if(user.getIdentity().equals("0"))
-//                return "redirect:/main.html";
-//            else if(user.getIdentity().equals("1"))
-//                return "redirect:/user/student";
-//            else return "redirect:/main.html";
         }
         else{
             model.addAttribute("msg","用户名或密码错误！");
             return "login";
         }
     }
+    /**
+     * 退出登录
+     */
+    @RequestMapping("/logout")
+    public String logout(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+        // 删除session里面的用户信息
+        session.removeAttribute("username");
+        session.removeAttribute("identity");
+        // 保存cookie，实现自动登录
+        Cookie cookie_username = new Cookie("cookie_username", "");
+        // 设置cookie的持久化时间，0
+        cookie_username.setMaxAge(0);
+        // 设置为当前项目下都携带这个cookie
+        cookie_username.setPath("/");
+        // 向客户端发送cookie
+        response.addCookie(cookie_username);
+        return "login";
+    }
 }
+

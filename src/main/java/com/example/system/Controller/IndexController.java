@@ -13,7 +13,6 @@ public class IndexController {
     @Autowired
     NoticeMapper noticeMapper;
 
-
     @GetMapping("/user/getNotice")
     @ResponseBody
     public String getNotice(Model model){

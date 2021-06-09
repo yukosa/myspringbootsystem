@@ -152,8 +152,6 @@ public class dailyinfoController {
     @RequestMapping("/user/dailyinfo/querry/day/{num}")
     public String querryday(Model model,HttpServletRequest request,@PathVariable("num")int num){
 
-
-
         try {
             HttpSession session = request.getSession();       // 获取登录信息
             Object obj = session.getAttribute("username");

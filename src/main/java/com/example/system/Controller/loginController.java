@@ -28,7 +28,6 @@ public class loginController {
 //            System.out.println("testsasd asdasdssssssssssss");
 
             if(pass!=null&&pass.equals("pass")){
-
                 Cookie cookie_username = new Cookie("cookie_username",username);
                 // 设置cookie的持久化时间，30天
                 cookie_username.setMaxAge(30 * 24 * 60 * 60);

@@ -12,7 +12,7 @@ import java.util.Map;
 @Service
 public class NoticeServicelmpl implements NoticeMapper{
     @Autowired
-    private NoticeMapper noticeMapper;
+    NoticeMapper noticeMapper;
 
     @Override
     public void saveNotice(Notice notice){

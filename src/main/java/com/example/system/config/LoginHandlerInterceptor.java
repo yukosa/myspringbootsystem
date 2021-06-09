@@ -23,6 +23,16 @@ public class LoginHandlerInterceptor implements HandlerInterceptor {
     }
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+        // 获取HttpSession对象
+        HttpSession session = request.getSession();
+
+        // 获取我们登录后存在session中的用户信息，如果为空，表示session已经过期
+        Object obj = session.getAttribute("username");
+        if(obj!=null){
+            return true;
+        }
+
+
         // 获得cookie
         Cookie[] cookies = request.getCookies();
         // 没有cookie信息，则重定向到登录界面
@@ -53,16 +63,11 @@ public class LoginHandlerInterceptor implements HandlerInterceptor {
             return false;
         }
 
-        // 获取HttpSession对象
-        HttpSession session = request.getSession();
-
-        // 获取我们登录后存在session中的用户信息，如果为空，表示session已经过期
-        Object obj = session.getAttribute("username");
 
         if (null == obj) {
             // 根据用户登录账号获取数据库中的用户信息
-            System.out.println("now  "+cookie_username);
-            System.out.println(Integer.parseInt(cookie_username));
+//            System.out.println("now  "+cookie_username);
+//            System.out.println(Integer.parseInt(cookie_username));
             User user = userService.getUserById(Integer.parseInt(cookie_username));
             // 将用户保存到session中
             session.setAttribute("username", cookie_username);

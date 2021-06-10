@@ -43,7 +43,7 @@ public class dailyinfoController {
     @Autowired
     DailyinfoExcelService dailyinfoExcelService;
 
-    @RequestMapping("/user/dailyinfo/global")
+    @RequestMapping("/user/teacher/dailyinfo/global")
     public String gloabalfresh(Model model){
         model.addAttribute("dailyinfos",null);
         model.addAttribute("pageInfo", null);
@@ -53,7 +53,7 @@ public class dailyinfoController {
         return "teacher/tables";
     }
 
-    @RequestMapping("/user/dailyinfo/local")
+    @RequestMapping("/user/teacher/dailyinfo/local")
     public String usermanage(Model model,
                              @RequestParam(required = false,defaultValue="1",value="pageNum")Integer pageNum,
                              @RequestParam(defaultValue="5",value="pageSize")Integer pageSize) {

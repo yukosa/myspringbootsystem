@@ -78,7 +78,7 @@
                             <tbody >
                             <tr  th:each="affair:${pageInfo.getList()}" >
                                 <td>
-                                    <a class = "btn btn-sm btn-primary" th:href="@{/teacher/affair/refuse/}+${affair.getUid()}">一键退回</a>
+                                    <a class = "btn btn-sm btn-primary" th:href="@{/user/teacher/affair/refuse/}+${affair.getUid()}">一键退回</a>
                                 </td>
                                 <td th:text="${affair.getId()}"></td>
                                 <td th:text="${affair.getName()}"></td>
@@ -98,30 +98,30 @@
                         </div>
                         <ul class="pagination pull-right no-margin">
                             <li th:if="${pageInfo.hasPreviousPage}">
-                                <a th:href="'/teacher/affair/checked?pageNum=1'">首页</a>
+                                <a th:href="'/user/teacher/affair/checked?pageNum=1'">首页</a>
                             </li>
 
                             <li class="prev" th:if="${pageInfo.hasPreviousPage}">
-                                <a th:href="'/teacher/affair/checked?pageNum='+${pageInfo.prePage}">
+                                <a th:href="'/user/teacher/affair/checked?pageNum='+${pageInfo.prePage}">
                                     <i class="ace-icon fa fa-angle-double-left"></i>
                                 </a>
                             </li>
                             <!--遍历条数-->
                             <li th:each="nav:${pageInfo.navigatepageNums}">
-                                <a th:href="'/teacher/affair/checked?pageNum='+${nav}" th:text="${nav}"
+                                <a th:href="'/user/teacher/affair/checked?pageNum='+${nav}" th:text="${nav}"
                                    th:if="${nav != pageInfo.pageNum}"></a>
                                 <span style="font-weight: bold;background: #6faed9;" th:if="${nav == pageInfo.pageNum}"
                                       th:text="${nav}"></span>
                             </li>
 
                             <li class="next" th:if="${pageInfo.hasNextPage}">
-                                <a th:href="'/teacher/affair/checked?pageNum='+${pageInfo.nextPage}">
+                                <a th:href="'/user/teacher/affair/checked?pageNum='+${pageInfo.nextPage}">
                                     <i class="ace-icon fa fa-angle-double-right"></i>
                                 </a>
                             </li>
 
                             <li>
-                                <a th:href="'/teacher/affair/checked?pageNum='+${pageInfo.pages}">尾页</a>
+                                <a th:href="'/user/teacher/affair/checked?pageNum='+${pageInfo.pages}">尾页</a>
                             </li>
 
                     </div>

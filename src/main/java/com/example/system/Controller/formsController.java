@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpSession;
@@ -20,6 +21,12 @@ public class formsController {
     UserMapper userMapper;
     @Autowired
     NoticeMapper noticeMapper;
+
+//    @RequestMapping("/user/teacher/forms")
+//    public String showforms(){
+//        return "teacher/forms";
+//    }
+
 
     @PostMapping("/user/forms")
     public String formsSubmit(@RequestParam("title")String title, @RequestParam("content")String content, @RequestParam("noticeType") String noticeType, @RequestParam("noticeTime") Date noticeTime, Model model, HttpSession session){

@@ -78,7 +78,7 @@ public class affairController {
             int loginId = Integer.parseInt(loginname);
             List<Affair> affairs = affairService.selectUserById(loginId);
 
-            System.out.println("分页数据"+affairs);
+//            System.out.println("分页数据"+affairs);
             PageInfo<Affair> pageInfo = new PageInfo<Affair>(affairs, pageSize);
             model.addAttribute("pageInfo", pageInfo);
         } finally {
@@ -108,7 +108,7 @@ public class affairController {
         return "student/myaffair";
     }
 
-    @RequestMapping("/teacher/affair/check")
+    @RequestMapping("/user/teacher/affair/check")
     public String checkaffair(Model model,HttpServletRequest request,
                                @RequestParam(required = false, defaultValue = "1", value = "pageNum") Integer pageNum,
                                @RequestParam(defaultValue = "5", value = "pageSize") Integer pageSize){
@@ -132,7 +132,7 @@ public class affairController {
             String loginname = (String) obj;
             int loginId = Integer.parseInt(loginname);
             List<Affair> affairs = affairService.getAffairByStatus(0);
-            System.out.println("分页数据"+affairs);
+//            System.out.println("分页数据"+affairs);
             PageInfo<Affair> pageInfo = new PageInfo<Affair>(affairs, pageSize);
             model.addAttribute("pageInfo", pageInfo);
         } finally {
@@ -141,15 +141,15 @@ public class affairController {
 
         return "teacher/check";
     }
-    @RequestMapping("/teacher/affair/allow/{uid}")
+    @RequestMapping("/user/teacher/affair/allow/{uid}")
     public String affairallow(Model model,@PathVariable("uid")int uid){
         Affair affair=affairService.getAffairByUid(uid);
         affair.status =1;
         affairService.updateUser(affair);
-        return "redirect:/teacher/affair/check";
+        return "redirect:/user/teacher/affair/check";
     }
 
-    @RequestMapping("/teacher/affair/checked")
+    @RequestMapping("/user/teacher/affair/checked")
     public String checkedaffair(Model model,HttpServletRequest request,
                               @RequestParam(required = false, defaultValue = "1", value = "pageNum") Integer pageNum,
                               @RequestParam(defaultValue = "5", value = "pageSize") Integer pageSize){
@@ -173,7 +173,7 @@ public class affairController {
             String loginname = (String) obj;
             int loginId = Integer.parseInt(loginname);
             List<Affair> affairs = affairService.getAffairByStatus(1);
-            System.out.println("分页数据"+affairs);
+//            System.out.println("分页数据"+affairs);
             PageInfo<Affair> pageInfo = new PageInfo<Affair>(affairs, pageSize);
             model.addAttribute("pageInfo", pageInfo);
         } finally {
@@ -182,12 +182,12 @@ public class affairController {
 
         return "teacher/checked";
     }
-    @RequestMapping("/teacher/affair/refuse/{uid}")
+    @RequestMapping("/user/teacher/affair/refuse/{uid}")
     public String affairrefuse(Model model,@PathVariable("uid")int uid){
         Affair affair=affairService.getAffairByUid(uid);
         affair.status =0;
         affairService.updateUser(affair);
-        return "redirect:/teacher/affair/checked";
+        return "redirect:/user/teacher/affair/checked";
     }
 
 }

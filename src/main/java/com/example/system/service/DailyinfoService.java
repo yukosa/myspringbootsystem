@@ -1,5 +1,6 @@
 package com.example.system.service;
 
+import com.example.system.bean.Basicinformation;
 import com.example.system.bean.Dailyinfo;
 
 import java.util.Date;
@@ -17,4 +18,6 @@ public interface DailyinfoService {
     Dailyinfo queryByNum(int num);
 
     int addinfo(Dailyinfo dailyindo);
+
+    List<Basicinformation> getWhiteList();
 }

@@ -1,5 +1,6 @@
 package com.example.system.serviceImpl;
 
+import com.example.system.bean.Basicinformation;
 import com.example.system.bean.Dailyinfo;
 import com.example.system.bean.User;
 import com.example.system.mapper.DailyinfoMapper;
@@ -46,5 +47,10 @@ public class DailyinfoServiceImpl implements DailyinfoService {
     @Override
     public int addinfo(Dailyinfo dailyindo) {
         return dailyinfoMapper.addinfo(dailyindo);
+    }
+
+    @Override
+    public List<Basicinformation> getWhiteList(){
+        return dailyinfoMapper.getWhiteList();
     }
 }

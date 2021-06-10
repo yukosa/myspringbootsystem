@@ -12,6 +12,10 @@
     <!--验证用户账号和密码-->
 
 
+    <select id="getIdentityByUsername" parameterType="string" resultType="String">
+        SELECT identity FROM user where userName = #{userName}
+    </select>
+
     <select resultType="com.example.system.bean.User" parameterType="String" id="getInfo">SELECT * FROM userWHERE userName = #{userName}AND pwd = #{pwd}; </select>
 
     <!--根据ID查询用户信息-->

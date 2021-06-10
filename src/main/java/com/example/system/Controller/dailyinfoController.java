@@ -5,14 +5,17 @@ package com.example.system.Controller;
 import com.alibaba.excel.ExcelWriter;
 import com.alibaba.excel.metadata.Sheet;
 import com.alibaba.excel.support.ExcelTypeEnum;
+import com.example.system.bean.Basicinformation;
 import com.example.system.bean.Dailyinfo;
 import com.example.system.bean.DailyinfoExcel;
 import com.example.system.bean.User;
+import com.example.system.mapper.UserMapper;
 import com.example.system.service.DailyinfoExcelService;
 import com.example.system.service.DailyinfoService;
 import com.example.system.service.UserService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import org.apache.catalina.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -84,6 +87,7 @@ public class dailyinfoController {
     public String gloabalfresh(Model model,HttpServletRequest request,
                                @RequestParam(required = false, defaultValue = "1", value = "pageNum") Integer pageNum,
                                @RequestParam(defaultValue = "5", value = "pageSize") Integer pageSize){
+        String identity;
         if (pageNum == null) {
             pageNum = 1;   //设置默认当前页
         }
@@ -103,6 +107,7 @@ public class dailyinfoController {
             }
             String loginname = (String) obj;
             int loginId = Integer.parseInt(loginname);
+            identity= (String) session.getAttribute("identity");
             List<Dailyinfo> dailyinfos = dailyinfoService.queryById(loginId);
 
             System.out.println("分页数据"+dailyinfos);
@@ -111,8 +116,13 @@ public class dailyinfoController {
         } finally {
             PageHelper.clearPage();
         }
+        if(identity=="0"){
+            return "student/dailyquerry";
+        }
+        else{
+            return "teacher/dailyquerry";
+        }
 
-        return "student/dailyquerry";
     }
 
 
@@ -173,6 +183,7 @@ public class dailyinfoController {
     @RequestMapping("/user/dailyinfo/write")
     public String dailywrite(Model model,HttpServletRequest request){
 
+        String identity;
         try {
             HttpSession session = request.getSession();       // 获取登录信息
             Object obj = session.getAttribute("username");
@@ -180,6 +191,7 @@ public class dailyinfoController {
                 return "redirect:/login";
             }
             String loginname = (String) obj;
+            identity= (String) session.getAttribute("identity");
             int loginId = Integer.parseInt(loginname);
             Date date = new Date(System.currentTimeMillis());
             model.addAttribute("id", loginId);
@@ -187,8 +199,12 @@ public class dailyinfoController {
         } finally {
             PageHelper.clearPage();
         }
-
-        return "student/dailywrite";
+        if(identity=="0"){
+            return "student/dailywrite";
+        }
+        else{
+            return "teacher/dailywrite";
+        }
     }
 
     @GetMapping("/user/dailyinfo/write/add")
@@ -202,5 +218,11 @@ public class dailyinfoController {
         return "redirect:/user/dailyinfo/querry";
     }
 
+    @GetMapping("/user/dailyinfo/whitelist")
+    public String createWhiteList(Model model){
+        List<Basicinformation> whitelist=dailyinfoService.getWhiteList();
+        model.addAttribute("whitelist",whitelist);
+        return "teacher/whiteList";
+    }
 
 }

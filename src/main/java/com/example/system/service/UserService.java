@@ -14,6 +14,9 @@ public interface UserService {
     //根据ID查询用户信息
     User queryUserById(String id);
 
+    //根据UserName查询用户身份
+    String getIdentityByUsername(String userName);
+
     //插入新的用户
     int addUser(User user);
 

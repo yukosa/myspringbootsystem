@@ -129,7 +129,6 @@
                             <table class="table table-bordered "  id="dataTable"  cellspacing="0" >
                                 <thead>
                                     <tr>
-                                        <th>操作</th>
                                         <th>学工号</th>
                                         <th>填报日期</th>
                                         <th>是否打卡</th>
@@ -150,10 +149,6 @@
 
                                 <tbody >
                                 <tr  th:each="dailyinfo:${dailyinfos}" >
-                                    <td>
-                                        <button class="btn btn-sm btn-primary" >编辑</button>
-                                        <button class="btn btn-sm btn-danger">删除</button>
-                                    </td>
                                     <td th:text="${dailyinfo.getId()}"></td>
                                     <td th:text="${#dates.format(dailyinfo.getFillingDate(),'yyyy-MM-dd hh:mm:ss')}"></td>
                                     <td th:text="${dailyinfo.getFill()==1?'是':'否'}"></td>
@@ -241,7 +236,7 @@
     </script>
     <script>
         $("#selectconfirm ").on("click",function (){
-            var num=16;
+            var num=15;
             var select =$("#selectmenu").val();
             var x=document.getElementById("missinfo");
             window.localStorage["select"]=select;
@@ -290,7 +285,7 @@
         function selectf(url){
             url='/user/dailyinfo/local?pageNum='+url;
             $('#confirmld').load(url,function (){
-                var num=16;
+                var num=15;
                 var sto=window.localStorage;
                 var select=sto.getItem("select").split(',');
                 if(select!=null){

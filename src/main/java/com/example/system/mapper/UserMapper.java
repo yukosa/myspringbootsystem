@@ -16,6 +16,9 @@ public interface UserMapper {
     //根据ID查询用户信息
     User selectUserById(String id);
 
+    //根据UserName查询用户身份
+    String getIdentityByUsername(String userName);
+
     //插入新的用户
     int addUser(User userBean);
 
@@ -27,4 +30,5 @@ public interface UserMapper {
 
     //查询所有用户
     List<User> getAllUser();
+
 }

@@ -25,8 +25,6 @@ public class loginController {
     public String login(@RequestParam("username")String username, @RequestParam("password")String password, @RequestParam("pass")String pass,Model model, HttpSession session, HttpServletRequest request, HttpServletResponse response){
         User user = userService.getUserById(Integer.parseInt(username));
         if(user!=null&&!StringUtils.isEmpty(username)&&user.getPwd().equals(password)){
-            System.out.println("testsasd asdasdssssssssssss"+pass);
-
             if(pass!=null&&!pass.equals("nopass")){
 
                 Cookie cookie_username = new Cookie("cookie_username",username);

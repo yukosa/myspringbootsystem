@@ -24,6 +24,11 @@
         select * from dailyInfo where num=#{num}
     </select>
 
+    <select id="getWhiteList" resultType="com.example.system.bean.Basicinformation">
+        select  basicinformation.* from dailyinfo,basicinformation where dailyinfo.id=basicinformation.id and timestampdiff(day,fillingDate,CURRENT_TIMESTAMP) &lt;= 14 and fill=true and temofAm
+        between 36 and 37.2 and temofPm between 36 and 37.2 and mIsolation = false and touchInfected = false and crossed =false and travelHRA =false and touchHRA = false
+    </select>
+
     <insert parameterType="com.example.system.bean.Dailyinfo" id="addinfo">
         INSERT InTO dailyinfo(id,fillingDate,fill,temOfAm,temOfPm,health,position,address,mIsolation,outside,touchInfected,crossed,travelHRA,touchHRA,returned)
         values(#{id},CURRENT_TIMESTAMP,#{fill},#{temOfAm},#{temOfPm},#{health},#{position},#{address},#{mIsolation},#{outside},#{touchInfected},#{crossed},#{travelHRA},#{touchHRA},#{returned})

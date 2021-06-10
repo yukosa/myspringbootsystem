@@ -1,5 +1,6 @@
 package com.example.system.mapper;
 
+import com.example.system.bean.Basicinformation;
 import com.example.system.bean.Dailyinfo;
 import com.example.system.bean.User;
 import org.apache.ibatis.annotations.Mapper;
@@ -23,4 +24,6 @@ public interface DailyinfoMapper {
     Dailyinfo queryByNum(int num);
 
     int addinfo(Dailyinfo dailyindo);
+
+    List<Basicinformation> getWhiteList();
 }

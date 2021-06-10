@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>Tables - SB Admin</title>
+
+
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css"
+          rel="stylesheet">
+    <link href="https://cdn.bootcss.com/bootstrap-select/1.12.1/css/bootstrap-select.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+
+    <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+
+    <script src="https://cdn.bootcss.com/moment.js/2.22.1/moment-with-locales.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+
+
+    <link href="https://cdn.bootcdn.net/ajax/libs/font-awesome/5.15.2/css/all.min.css" rel="stylesheet">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" target="_blank" class="external-link"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/css/bootstrap-select.min.css">
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/bootstrap-select.min.js"></script>
+    <!-- (Optional) Latest compiled and minified JavaScript translation files -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/i18n/defaults-*.min.js"></script>
+
+
+    <!--表格图标等-->
+    <link th:href="@{/css/styles.css}" rel="stylesheet"/>
+    <link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet"
+          crossorigin="anonymous"/>
+    <link href="https://cdn.bootcss.com/font-awesome/5.13.0/css/all.css" rel="stylesheet">
+
+
+</head>
+
+<body class="sb-nav-fixed">
+
+
+<div th:replace="~{commons/tcommon::nvbar}"></div>
+<div id="layoutSidenav">
+    <div th:replace="~{commons/tcommon::sidebar}"></div>
+
+
+    <div id="layoutSidenav_content">
+        <main>
+            <div class="container-fluid">
+                <h1 class="mt-4">每日填报</h1>
+                <ol class="breadcrumb mb-4">
+                    <li class="breadcrumb-item"><a th:href="@{/user/student}">Dashboard</a></li>
+                    <li class="breadcrumb-item active">每日填报</li>
+                </ol>
+                <form class="form-horizontal" th:action="@{/user/dailyinfo/write/add}" method="post">
+                    <div class="form-group">
+                        <label  class="col-sm-2 control-label">学工号</label>
+                        <div class="col-sm-10">
+                            <input th:value = " ${ id }"readonly="readonly" class="form-control"  name = "id" >
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label  class="col-sm-2 control-label">填报日期</label>
+                        <div class="col-sm-10">
+                            <input th:value = " ${#dates.format(date,'yyyy-MM-dd hh:mm:ss')}"readonly="readonly" class="form-control"  name = "fillDate" >
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label  class="col-sm-2 control-label">是否打卡</label>
+                        <div class="col-sm-10">
+                            <select class="form-control" name = "fill">
+                                <option value="1">是</option>
+                                <option value="0">否</option>
+                            </select>
+                            <!--                        <input class="form-control"  name = "identity"placeholder="学生（0），教师（1），管理员（2）">-->
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label  class="col-sm-2 control-label">上午体温</label>
+                        <div class="col-sm-10">
+                            <input  class="form-control"  name = "temOfAm" >
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label  class="col-sm-2 control-label">下午体温</label>
+                        <div class="col-sm-10">
+                            <input  class="form-control"  name = "temOfPm" >
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label  class="col-sm-2 control-label">健康状况</label>
+                        <div class="col-sm-10">
+                            <input  class="form-control"  name = "health" >
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label  class="col-sm-2 control-label">现处位置</label>
+                        <div class="col-sm-10">
+                            <input  class="form-control"  name = "position" >
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label  class="col-sm-2 control-label">具体地址</label>
+                        <div class="col-sm-10">
+                            <input  class="form-control"  name = "address" >
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label  class="col-sm-2 control-label">是否医学隔离</label>
+                        <div class="col-sm-10">
+                            <select class="form-control" name = "mlsolation">
+                                <option value="0">否</option>
+                                <option value="1">是</option>
+                            </select>
+                            <!--                        <input class="form-control"  name = "identity"placeholder="学生（0），教师（1），管理员（2）">-->
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label  class="col-sm-2 control-label">是否外出</label>
+                        <div class="col-sm-10">
+                            <select class="form-control" name = "outside">
+                                <option value="0">否</option>
+                                <option value="1">是</option>
+                            </select>
+                            <!--                        <input class="form-control"  name = "identity"placeholder="学生（0），教师（1），管理员（2）">-->
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label  class="col-sm-2 control-label">是否与确诊/无症状感染者接触</label>
+                        <div class="col-sm-10">
+                            <select class="form-control" name = "touchinfected">
+                                <option value="0">否</option>
+                                <option value="1">是</option>
+                            </select>
+                            <!--                        <input class="form-control"  name = "identity"placeholder="学生（0），教师（1），管理员（2）">-->
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label  class="col-sm-2 control-label">是否与感染者行程交叉</label>
+                        <div class="col-sm-10">
+                            <select class="form-control" name = "crossed">
+                                <option value="0">否</option>
+                                <option value="1">是</option>
+                            </select>
+                            <!--                        <input class="form-control"  name = "identity"placeholder="学生（0），教师（1），管理员（2）">-->
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label  class="col-sm-2 control-label">是否中高风险区域旅居史</label>
+                        <div class="col-sm-10">
+                            <select class="form-control" name = "travel">
+                                <option value="0">否</option>
+                                <option value="1">是</option>
+                            </select>
+                            <!--                        <input class="form-control"  name = "identity"placeholder="学生（0），教师（1），管理员（2）">-->
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label  class="col-sm-2 control-label">是否与中高风险区域人员接触</label>
+                        <div class="col-sm-10">
+                            <select class="form-control" name = "touch">
+                                <option value="0">否</option>
+                                <option value="1">是</option>
+                            </select>
+                            <!--                        <input class="form-control"  name = "identity"placeholder="学生（0），教师（1），管理员（2）">-->
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label  class="col-sm-2 control-label">是否返校</label>
+                        <div class="col-sm-10">
+                            <select class="form-control" name = "returned">
+                                <option value="0">否</option>
+                                <option value="1">是</option>
+                            </select>
+                            <!--                        <input class="form-control"  name = "identity"placeholder="学生（0），教师（1），管理员（2）">-->
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <button type="submit" class="btn btn-default">提交</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </main>
+    </div>
+</div>
+<script th:src="@{/js/scripts.js}"></script>
+<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
+<script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js" crossorigin="anonymous"></script>
+</body>
+
+
+</html>

@@ -31,6 +31,7 @@ public class basicinfoController {
 
     @RequestMapping("/user/basicinformation")
     public String basicwrite(Model model,HttpServletRequest request){
+        String identity;
         try {
             HttpSession session = request.getSession();       // 获取登录信息
             Object obj = session.getAttribute("username");
@@ -39,6 +40,7 @@ public class basicinfoController {
             }
             String loginname = (String) obj;
             int loginId = Integer.parseInt(loginname);
+            identity= (String) session.getAttribute("identity");
             Basicinformation basicinformation=basicinformationService.selectUserById(loginId);
             if (basicinformation==null){
                 //System.out.println("wrong");
@@ -50,8 +52,12 @@ public class basicinfoController {
         } finally {
             PageHelper.clearPage();
         }
-
-        return "student/basicinformation";
+        if(identity=="0"){
+            return "student/basicinformation";
+        }
+        else{
+            return "teacher/basicinformation";
+        }
     }
 
     @RequestMapping("/user/basicinformation/modify")

@@ -72,18 +72,20 @@
                                 <th>姓名</th>
                                 <th>申请内容</th>
                                 <th>审核状态</th>
+                                <th>审核是否通过</th>
                             </tr>
                             </thead>
 
                             <tbody >
                             <tr  th:each="affair:${pageInfo.getList()}" >
                                 <td>
-                                    <a class = "btn btn-sm btn-primary" th:href="@{/user/teacher/affair/refuse/}+${affair.getUid()}">一键退回</a>
+                                    <a class = "btn btn-sm btn-primary" th:href="@{/user/teacher/affair/change/}+${affair.getUid()}">一键改判</a>
                                 </td>
                                 <td th:text="${affair.getId()}"></td>
                                 <td th:text="${affair.getName()}"></td>
                                 <td th:text="${affair.getContent()}"></td>
-                                <td th:text="${affair.getStatus()==1?'是':'否'}" ></td>
+                                <td th:text="${affair.getStatus()==1?'已审核':'未审核'}" ></td>
+                                <td th:text="${affair.getPass()==1?'是':'否'}" ></td>
                             </tr>
                             </tbody>
                         </table>

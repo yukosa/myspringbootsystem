@@ -145,6 +145,7 @@ public class affairController {
     public String affairallow(Model model,@PathVariable("uid")int uid){
         Affair affair=affairService.getAffairByUid(uid);
         affair.status =1;
+        affair.pass=1;
         affairService.updateUser(affair);
         return "redirect:/user/teacher/affair/check";
     }
@@ -185,9 +186,17 @@ public class affairController {
     @RequestMapping("/user/teacher/affair/refuse/{uid}")
     public String affairrefuse(Model model,@PathVariable("uid")int uid){
         Affair affair=affairService.getAffairByUid(uid);
-        affair.status =0;
+        affair.status =1;
+        affair.pass=0;
+        affairService.updateUser(affair);
+        return "redirect:/user/teacher/affair/check";
+    }
+    @RequestMapping("/user/teacher/affair/change/{uid}")
+    public String affairchange(Model model,@PathVariable("uid")int uid){
+        Affair affair=affairService.getAffairByUid(uid);
+        if(affair.pass ==1)affair.pass=0;
+        else affair.pass=1;
         affairService.updateUser(affair);
         return "redirect:/user/teacher/affair/checked";
     }
-
 }

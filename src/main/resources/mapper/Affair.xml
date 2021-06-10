@@ -34,7 +34,8 @@
         SET id=#{id},
             name=#{name},
             content=#{content},
-            status= #{status}
+            status= #{status},
+            pass=#{pass}
         WHERE uid = #{uid}
     </update>
 

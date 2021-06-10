@@ -73,6 +73,7 @@
                                 <th>姓名</th>
                                 <th>申请内容</th>
                                 <th>审核状态</th>
+                                <th>审核是否通过</th>
                             </tr>
                             </thead>
 
@@ -84,7 +85,8 @@
                                 <td th:text="${affair.getId()}"></td>
                                 <td th:text="${affair.getName()}"></td>
                                 <td th:text="${affair.getContent()}"></td>
-                                <td th:text="${affair.getStatus()==1?'是':'否'}" ></td>
+                                <td th:text="${affair.getStatus()==1?'已审核':'未审核'}" ></td>
+                                <td th:text="${affair.getPass()==1?'是':'否'}" ></td>
                             </tr>
                             </tbody>
                         </table>

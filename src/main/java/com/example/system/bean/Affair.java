@@ -15,4 +15,5 @@ public class Affair {
     String name;
     String content;
     public int status;
+    public int pass;
 }

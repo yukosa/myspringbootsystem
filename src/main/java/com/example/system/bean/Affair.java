@@ -14,5 +14,5 @@ public class Affair {
     int id;
     String name;
     String content;
-    int status;
+    public int status;
 }

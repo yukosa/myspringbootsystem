@@ -10,6 +10,7 @@ import java.util.List;
 
 public interface AffairService {
     Affair getAffairByUid(int uid);
+    List<Affair> getAffairByStatus(int status);
     //根据ID查询用户信息
     List<Affair> selectUserById(int id);
 

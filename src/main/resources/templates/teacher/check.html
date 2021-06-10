@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Tables - SB Admin</title>
+
+
+
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/bootstrap-select/1.12.1/css/bootstrap-select.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+
+    <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+
+    <script src="https://cdn.bootcss.com/moment.js/2.22.1/moment-with-locales.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+
+
+    <link href="https://cdn.bootcdn.net/ajax/libs/font-awesome/5.15.2/css/all.min.css" rel="stylesheet">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" target="_blank" class="external-link" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/css/bootstrap-select.min.css">
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/bootstrap-select.min.js"></script>
+    <!-- (Optional) Latest compiled and minified JavaScript translation files -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/i18n/defaults-*.min.js"></script>
+
+
+    <!--表格图标等-->
+    <link th:href="@{/css/styles.css}" rel="stylesheet" />
+    <link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet" crossorigin="anonymous" />
+    <link href="https://cdn.bootcss.com/font-awesome/5.13.0/css/all.css" rel="stylesheet">
+
+
+</head>
+
+<body class="sb-nav-fixed">
+
+
+<div th:replace="~{commons/tcommon::nvbar}"></div>
+<div id="layoutSidenav">
+    <div th:replace="~{commons/tcommon::sidebar}"></div>
+
+
+
+    <div id="layoutSidenav_content">
+        <main>
+
+            <div class="container-fluid">
+                <h1 class="mt-4">申请审核</h1>
+                <ol class="breadcrumb mb-4">
+                    <li class="breadcrumb-item"><a th:href="@{/user/teacher}">Dashboard</a></li>
+                    <li class="breadcrumb-item active">申请审核</li>
+                </ol>
+
+
+
+                <div class="card mb-4">
+                    <div class="card-header">
+                        申请记录信息
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive" id="confirmld" th:fragment="ld" >
+                        <!--text-nowrap-->
+                        <table class="table table-bordered "  id="dataTable"  cellspacing="0" >
+                            <thead>
+                            <tr>
+                                <th>操作</th>
+                                <th>学工号</th>
+                                <th>姓名</th>
+                                <th>申请内容</th>
+                                <th>审核状态</th>
+                            </tr>
+                            </thead>
+
+                            <tbody >
+                            <tr  th:each="affair:${pageInfo.getList()}" >
+                                <td>
+                                    <a class = "btn btn-sm btn-primary" th:href="@{/teacher/affair/allow/}+${affair.getUid()}">一键通过</a>
+                                </td>
+                                <td th:text="${affair.getId()}"></td>
+                                <td th:text="${affair.getName()}"></td>
+                                <td th:text="${affair.getContent()}"></td>
+                                <td th:text="${affair.getStatus()==1?'是':'否'}" ></td>
+                            </tr>
+                            </tbody>
+                        </table>
+
+
+
+                        </ul>
+                    </div>
+                    <div class="modal-footer no-margin-top" >
+                        <div class="col-md-6">
+                            当前第 [[${pageInfo.pageNum}]]页,共 [[${pageInfo.pages}]] 页.一共 [[${pageInfo.total}]] 条记录
+                        </div>
+                        <ul class="pagination pull-right no-margin">
+                            <li th:if="${pageInfo.hasPreviousPage}">
+                                <a th:href="'/teacher/affair/check?pageNum=1'">首页</a>
+                            </li>
+
+                            <li class="prev" th:if="${pageInfo.hasPreviousPage}">
+                                <a th:href="'/teacher/affair/check?pageNum='+${pageInfo.prePage}">
+                                    <i class="ace-icon fa fa-angle-double-left"></i>
+                                </a>
+                            </li>
+                            <!--遍历条数-->
+                            <li th:each="nav:${pageInfo.navigatepageNums}">
+                                <a th:href="'/teacher/affair/check?pageNum='+${nav}" th:text="${nav}"
+                                   th:if="${nav != pageInfo.pageNum}"></a>
+                                <span style="font-weight: bold;background: #6faed9;" th:if="${nav == pageInfo.pageNum}"
+                                      th:text="${nav}"></span>
+                            </li>
+
+                            <li class="next" th:if="${pageInfo.hasNextPage}">
+                                <a th:href="'/teacher/affair/check?pageNum='+${pageInfo.nextPage}">
+                                    <i class="ace-icon fa fa-angle-double-right"></i>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a th:href="'/teacher/affair/check?pageNum='+${pageInfo.pages}">尾页</a>
+                            </li>
+
+                    </div>
+
+                    <div>当前页号：<span th:text="${pageInfo.pageNum}"></span></div>
+                    <div>每页条数：<span th:text="${pageInfo.pageSize}"></span></div>
+                    <div>起始行号：<span th:text="${pageInfo.startRow}"></span></div>
+                    <div>终止行号：<span th:text="${pageInfo.endRow}"></span></div>
+                    <div>总结果数：<span th:text="${pageInfo.total}"></span></div>
+                    <div>总页数：<span th:text="${pageInfo.pages}"></span></div>
+                    <hr />
+                    <div>是否为第一页：<span th:text="${pageInfo.isFirstPage}"></span></div>
+                    <div>是否为最后一页：<span th:text="${pageInfo.isLastPage}"></span></div>
+                    <div>是否有前一页：<span th:text="${pageInfo.hasPreviousPage}"></span></div>
+                    <div>是否有下一页：<span th:text="${pageInfo.hasNextPage}"></span></div>
+                </div>
+                <footer class="py-4 bg-light mt-auto">
+                    <div class="container-fluid">
+                        <div class="d-flex align-items-center justify-content-between small">
+                            <div class="text-muted">Copyright &copy; Your Website 2021</div>
+                            <div>
+                                <a href="#">Privacy Policy</a>
+                                &middot;
+                                <a href="#">Terms &amp; Conditions</a>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+        </main>
+    </div>
+</div>
+<script th:src="@{/js/scripts.js}"></script>
+<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
+<script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js" crossorigin="anonymous"></script>
+</body>
+
+</script>
+</html>

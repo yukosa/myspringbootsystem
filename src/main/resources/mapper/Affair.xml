@@ -5,6 +5,9 @@
     <select id="getAffairByUid" parameterType="int" resultType="com.example.system.bean.Affair">
         SELECT * FROM affair WHERE uid = #{uid}
     </select>
+    <select id="getAffairByStatus" parameterType="int" resultType="com.example.system.bean.Affair">
+        SELECT * FROM affair WHERE status = #{status}
+    </select>
     <!--根据ID查询用户信息-->
     <select id="selectUserById" parameterType="int" resultType="com.example.system.bean.Affair">
         SELECT * FROM affair
@@ -31,7 +34,7 @@
         SET id=#{id},
             name=#{name},
             content=#{content},
-            statua=#{status}
+            status= #{status}
         WHERE uid = #{uid}
     </update>
 

@@ -38,7 +38,7 @@
 <body class="sb-nav-fixed">
 
 
-<div th:replace="~{commons/tcommon::nvbar}"></div>
+<div th:replace="~{commons/common::nvbar}"></div>
 <div id="layoutSidenav">
     <div th:replace="~{commons/tcommon::sidebar}"></div>
 
@@ -50,8 +50,8 @@
             <div class="container-fluid">
                 <h1 class="mt-4">填报信息查看</h1>
                 <ol class="breadcrumb mb-4">
-                    <li class="breadcrumb-item"><a th:href="@{/user/student}">Dashboard</a></li>
-                    <li class="breadcrumb-item active">填报信息</li>
+                    <li class="breadcrumb-item"><a th:href="@{/user/teacher}">Dashboard</a></li>
+                    <li class="breadcrumb-item active">填报信息查看</li>
                 </ol>
 
 
@@ -62,7 +62,7 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <h2><a class = "btn btn-sm btn-success" th:href="@{/user/querry/write}">今日填报</a></h2>
+                    <h2><a class = "btn btn-sm btn-success" th:href="@{/user/teacher/dailyinfo/write}">今日填报</a></h2>
                     <div class="table-responsive" id="confirmld" th:fragment="ld" >
                         <!--text-nowrap-->
                         <table class="table table-bordered "  id="dataTable"  cellspacing="0" >
@@ -90,7 +90,7 @@
                             <tbody >
                             <tr  th:each="dailyinfo:${pageInfo.getList()}" >
                                 <td>
-                                    <a class = "btn btn-sm btn-primary" th:href="@{/user/dailyinfo/querry/day/}+${dailyinfo.getNum()}">查看</a>
+                                    <a class = "btn btn-sm btn-primary" th:href="@{/user/teacher/dailyinfo/querry/day/}+${dailyinfo.getNum()}">查看</a>
                                 </td>
                                 <td th:text="${dailyinfo.getId()}"></td>
                                 <td th:text="${#dates.format(dailyinfo.getFillingDate(),'yyyy-MM-dd hh:mm:ss')}"></td>

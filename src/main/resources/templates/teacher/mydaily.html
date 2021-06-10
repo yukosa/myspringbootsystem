@@ -48,91 +48,106 @@
     <div id="layoutSidenav_content">
         <main>
             <div class="container-fluid">
-                <h1 class="mt-4">基本信息填写</h1>
+                <h1 class="mt-4">查看信息</h1>
                 <ol class="breadcrumb mb-4">
                     <li class="breadcrumb-item"><a th:href="@{/user/teacher}">Dashboard</a></li>
-                    <li class="breadcrumb-item active">基本信息填写</li>
+                    <li class="breadcrumb-item"><a th:href="@{/user/teacher/dailyinfo/querry}">填报信息查看</a></li>
+                    <li class="breadcrumb-item active">查看信息</li>
                 </ol>
-                <form class="form-horizontal" th:action="@{/user/teacher/basicinformation/modify}" method="post">
+                <form class="form-horizontal" th:action="@{/user/teacher/dailyinfo/querry}" method="post">
                     <div class="form-group">
                         <label  class="col-sm-2 control-label">学工号</label>
                         <div class="col-sm-10">
-                            <input th:value = " ${basicinformation.getId() }"readonly="readonly" class="form-control"  name = "id" >
+                            <input th:value = " ${dailyinfo.getId()}"readonly="readonly" class="form-control"  name = "id" >
                         </div>
                     </div>
                     <div class="form-group">
-                        <label  class="col-sm-2 control-label">姓名</label>
+                        <label  class="col-sm-2 control-label">填报日期</label>
                         <div class="col-sm-10">
-                            <input th:value = " ${basicinformation.getName()}" class="form-control"  name = "name" >
+                            <input th:value = " ${#dates.format(dailyinfo.getFillingDate(),'yyyy-MM-dd hh:mm:ss')}"readonly="readonly" class="form-control"  name = "fillDate" >
                         </div>
                     </div>
                     <div class="form-group">
-                        <label  class="col-sm-2 control-label">性别</label>
+                        <label  class="col-sm-2 control-label">是否打卡</label>
                         <div class="col-sm-10">
-                            <select class="form-control" name = "sex">
-                                <option  th:selected="${basicinformation.getSex()=='男'}" value="男">男</option>
-                                <option  th:selected="${basicinformation.getSex()=='女'}" value="女">女</option>
-                            </select>
-                            <!--                        <input class="form-control"  name = "identity"placeholder="学生（0），教师（1），管理员（2）">-->
+                            <input class="form-control"   readonly="readonly" name = "fill" th:value="${dailyinfo.getFill()==1?'是':'否'}" type="text">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label  class="col-sm-2 control-label">年龄</label>
+                        <label  class="col-sm-2 control-label">上午体温</label>
                         <div class="col-sm-10">
-                            <input  th:value = " ${basicinformation.getAge()}" class="form-control"  name = "age" >
+                            <input th:value = " ${dailyinfo.getTemOfAm()}"readonly="readonly" class="form-control"  name = "temOfAm" >
                         </div>
                     </div>
                     <div class="form-group">
-                        <label  class="col-sm-2 control-label">身份证号码</label>
+                        <label  class="col-sm-2 control-label">下午体温</label>
                         <div class="col-sm-10">
-                            <input  th:value = " ${basicinformation.getIdCardNo()}" class="form-control"  name = "idCardNo" >
+                            <input th:value = " ${dailyinfo.getTemOfPm()}"readonly="readonly" class="form-control"  name = "temOfPm" >
                         </div>
                     </div>
                     <div class="form-group">
-                        <label  class="col-sm-2 control-label">电话号码</label>
+                        <label  class="col-sm-2 control-label">健康状况</label>
                         <div class="col-sm-10">
-                            <input  th:value = " ${basicinformation.getPhoneNum()}" class="form-control"  name = "phoneNum" >
+                            <input th:value = " ${dailyinfo.getHealth()}"readonly="readonly" class="form-control"  name = "health" >
                         </div>
                     </div>
                     <div class="form-group">
-                        <label  class="col-sm-2 control-label">学院</label>
+                        <label  class="col-sm-2 control-label">现处位置</label>
                         <div class="col-sm-10">
-                            <input  th:value = " ${basicinformation.getCollege()}" class="form-control"  name = "college" >
+                            <input th:value = " ${dailyinfo.getPosition()}"readonly="readonly" class="form-control"  name = "position" >
                         </div>
                     </div>
                     <div class="form-group">
-                        <label  class="col-sm-2 control-label">住所</label>
+                        <label  class="col-sm-2 control-label">具体地址</label>
                         <div class="col-sm-10">
-                            <input  th:value = " ${basicinformation.getResidence()}" class="form-control"  name = "residence" >
+                            <input th:value = " ${dailyinfo.address}"readonly="readonly" class="form-control"  name = "address" >
                         </div>
                     </div>
                     <div class="form-group">
-                        <label  class="col-sm-2 control-label">校区</label>
+                        <label  class="col-sm-2 control-label">是否医学隔离</label>
                         <div class="col-sm-10">
-                             <input  th:value = " ${basicinformation.getCampus()}" class="form-control"  name = "campus" >
+                            <input th:value = " ${dailyinfo.getMIsolation()==1?'是':'否'}"readonly="readonly" class="form-control"  name = "mlsolation" >
                         </div>
                     </div>
                     <div class="form-group">
-                        <label  class="col-sm-2 control-label">原籍地</label>
+                        <label  class="col-sm-2 control-label">是否外出</label>
                         <div class="col-sm-10">
-                            <input  th:value = " ${basicinformation.getPlaceOfOrigin()}" class="form-control"  name = "placeOfOrigin" >
+                            <input th:value = " ${dailyinfo.getOutside()==1?'是':'否'}"readonly="readonly" class="form-control"  name = "outside" >
                         </div>
                     </div>
                     <div class="form-group">
-                        <label  class="col-sm-2 control-label">现户籍地</label>
+                        <label  class="col-sm-2 control-label">是否与确诊/无症状感染者接触</label>
                         <div class="col-sm-10">
-                            <input  th:value = " ${basicinformation.getPlaceOfDomicile()}" class="form-control"  name = "placeOfDomicile" >
+                            <input th:value = " ${dailyinfo.getTouchInfected()==1?'是':'否'}"readonly="readonly" class="form-control"  name = "touchinfected" >
                         </div>
                     </div>
                     <div class="form-group">
-                        <label  class="col-sm-2 control-label">现居住地</label>
+                        <label  class="col-sm-2 control-label">是否与感染者行程交叉</label>
                         <div class="col-sm-10">
-                            <input  th:value = " ${basicinformation.getCurrentResidence()}" class="form-control"  name = "currentResidence" >
+                            <input th:value = " ${dailyinfo.getCrossed()==1?'是':'否'}"readonly="readonly" class="form-control"  name = "crossed" >
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label  class="col-sm-2 control-label">是否中高风险区域旅居史</label>
+                        <div class="col-sm-10">
+                            <input th:value = " ${dailyinfo.getTravelHRA()==1?'是':'否'}"readonly="readonly" class="form-control"  name = "trvalHRA" >
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label  class="col-sm-2 control-label">是否与中高风险区域人员接触</label>
+                        <div class="col-sm-10">
+                            <input th:value = " ${dailyinfo.getTouchHRA()==1?'是':'否'}"readonly="readonly" class="form-control"  name = "touchHRA" >
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label  class="col-sm-2 control-label">是否返校</label>
+                        <div class="col-sm-10">
+                            <input th:value = " ${dailyinfo.getReturned()==1?'是':'否'}"readonly="readonly" class="form-control"  name = "returned" >
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="col-sm-offset-2 col-sm-10">
-                            <button type="submit" class="btn btn-default">提交修改</button>
+                            <button type="submit" class="btn btn-default">返回</button>
                         </div>
                     </div>
                 </form>

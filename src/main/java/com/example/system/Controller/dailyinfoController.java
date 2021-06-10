@@ -36,16 +36,17 @@ import java.util.List;
 
 
 
+
+
 @Controller
 public class dailyinfoController {
-
     @Autowired
     DailyinfoService dailyinfoService;
+
     @Autowired
     UserService userService;
     @Autowired
     DailyinfoExcelService dailyinfoExcelService;
-
     @RequestMapping("/user/teacher/dailyinfo/global")
     public String gloabalfresh(Model model){
         model.addAttribute("dailyinfos",null);
@@ -82,7 +83,7 @@ public class dailyinfoController {
     }
 
 
-
+    //学生日常信息填报查询
     @RequestMapping("/user/dailyinfo/querry")
     public String gloabalfresh(Model model,HttpServletRequest request,
                                @RequestParam(required = false, defaultValue = "1", value = "pageNum") Integer pageNum,
@@ -110,7 +111,7 @@ public class dailyinfoController {
             identity= (String) session.getAttribute("identity");
             List<Dailyinfo> dailyinfos = dailyinfoService.queryById(loginId);
 
-            System.out.println("分页数据"+dailyinfos);
+//            System.out.println("分页数据"+dailyinfos);
             PageInfo<Dailyinfo> pageInfo = new PageInfo<Dailyinfo>(dailyinfos, pageSize);
             model.addAttribute("pageInfo", pageInfo);
         } finally {
@@ -123,6 +124,43 @@ public class dailyinfoController {
             return "teacher/dailyquerry";
         }
 
+    }
+
+
+//    老师日常信息填报查询
+    @RequestMapping("/user/teacher/dailyinfo/querry")
+    public String gloabalfresh2(Model model,HttpServletRequest request,
+                               @RequestParam(required = false, defaultValue = "1", value = "pageNum") Integer pageNum,
+                               @RequestParam(defaultValue = "5", value = "pageSize") Integer pageSize){
+        if (pageNum == null) {
+            pageNum = 1;   //设置默认当前页
+        }
+        if (pageNum <= 0) {
+            pageNum = 1;
+        }
+        if (pageSize == null) {
+            pageSize = 5;    //设置默认每页显示的数据数
+        }
+
+        PageHelper.startPage(pageNum, pageSize);
+        try {
+            HttpSession session = request.getSession();       // 获取登录信息
+            Object obj = session.getAttribute("username");
+            if (obj == null) {     // 登录信息为 null，表示没有登录
+                return "redirect:/login";
+            }
+            String loginname = (String) obj;
+            int loginId = Integer.parseInt(loginname);
+            List<Dailyinfo> dailyinfos = dailyinfoService.queryById(loginId);
+
+//            System.out.println("分页数据"+dailyinfos);
+            PageInfo<Dailyinfo> pageInfo = new PageInfo<Dailyinfo>(dailyinfos, pageSize);
+            model.addAttribute("pageInfo", pageInfo);
+        } finally {
+            PageHelper.clearPage();
+        }
+
+        return "teacher/dailyquerry";
     }
 
 
@@ -159,6 +197,7 @@ public class dailyinfoController {
         }
     }
 
+
     @RequestMapping("/user/dailyinfo/querry/day/{num}")
     public String querryday(Model model,HttpServletRequest request,@PathVariable("num")int num){
 
@@ -179,6 +218,28 @@ public class dailyinfoController {
         return "student/mydaily";
     }
 
+
+    @RequestMapping("/user/teacher/dailyinfo/querry/day/{num}")
+    public String querryday2(Model model,HttpServletRequest request,@PathVariable("num")int num){
+
+        try {
+            HttpSession session = request.getSession();       // 获取登录信息
+            Object obj = session.getAttribute("username");
+            if (obj == null) {     // 登录信息为 null，表示没有登录
+                return "redirect:/login";
+            }
+            String loginname = (String) obj;
+            int loginId = Integer.parseInt(loginname);
+            Dailyinfo dailyinfo = dailyinfoService.queryByNum(num);
+            model.addAttribute("dailyinfo",dailyinfo);
+        } finally {
+            PageHelper.clearPage();
+        }
+
+        return "teacher/mydaily";
+    }
+
+//    学生日常信息填报
 
     @RequestMapping("/user/dailyinfo/write")
     public String dailywrite(Model model,HttpServletRequest request){
@@ -206,23 +267,57 @@ public class dailyinfoController {
             return "teacher/dailywrite";
         }
     }
+//    老师日常信息填报
+
+    @RequestMapping("/user/teacher/dailyinfo/write")
+    public String dailywrite2(Model model,HttpServletRequest request){
+
+        try {
+            HttpSession session = request.getSession();       // 获取登录信息
+            Object obj = session.getAttribute("username");
+            if (obj == null) {     // 登录信息为 null，表示没有登录
+                return "redirect:/login";
+            }
+            String loginname = (String) obj;
+            int loginId = Integer.parseInt(loginname);
+            Date date = new Date(System.currentTimeMillis());
+            model.addAttribute("id", loginId);
+            model.addAttribute("date", date);
+        } finally {
+            PageHelper.clearPage();
+        }
+
+        return "teacher/dailywrite";
+    }
 
     @GetMapping("/user/dailyinfo/write/add")
     public String toAddpage(){
         return "student/dailyquerry";
     }
+
     @PostMapping("/user/dailyinfo/write/add")
     public String AddInfo(Dailyinfo dailyinfo){
         dailyinfoService.addinfo(dailyinfo);
 
         return "redirect:/user/dailyinfo/querry";
     }
-
-    @GetMapping("/user/dailyinfo/whitelist")
+    @GetMapping("/user/teacher/dailyinfo/whitelist")
     public String createWhiteList(Model model){
         List<Basicinformation> whitelist=dailyinfoService.getWhiteList();
         model.addAttribute("whitelist",whitelist);
         return "teacher/whiteList";
+    }
+
+    @GetMapping("/user/teacher/dailyinfo/write/add")
+    public String toAddpage2(){
+        return "teacher/dailyquerry";
+    }
+
+    @PostMapping("/user/teacher/dailyinfo/write/add")
+    public String AddInfo2(Dailyinfo dailyinfo){
+        dailyinfoService.addinfo(dailyinfo);
+
+        return "redirect:/user/teacher/dailyinfo/querry";
     }
 
 }

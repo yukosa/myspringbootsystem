@@ -40,7 +40,7 @@
 <body class="sb-nav-fixed">
 
 
-<div th:replace="~{commons/tcommon::nvbar}"></div>
+<div th:replace="~{commons/common::nvbar}"></div>
 <div id="layoutSidenav">
     <div th:replace="~{commons/tcommon::sidebar}"></div>
 
@@ -50,10 +50,10 @@
             <div class="container-fluid">
                 <h1 class="mt-4">每日填报</h1>
                 <ol class="breadcrumb mb-4">
-                    <li class="breadcrumb-item"><a th:href="@{/user/student}">Dashboard</a></li>
+                    <li class="breadcrumb-item"><a th:href="@{/user/teacher}">Dashboard</a></li>
                     <li class="breadcrumb-item active">每日填报</li>
                 </ol>
-                <form class="form-horizontal" th:action="@{/user/dailyinfo/write/add}" method="post">
+                <form class="form-horizontal" th:action="@{/user/teacher/dailyinfo/write/add}" method="post">
                     <div class="form-group">
                         <label  class="col-sm-2 control-label">学工号</label>
                         <div class="col-sm-10">

@@ -66,4 +66,37 @@ public class basicinfoController {
         basicinformationService.updateUser(info);
         return "redirect:/user/basicinformation";
     }
+
+
+    @RequestMapping("/user/teacher/basicinformation")
+    public String basicwrite2(Model model,HttpServletRequest request){
+        try {
+            HttpSession session = request.getSession();       // 获取登录信息
+            Object obj = session.getAttribute("username");
+            if (obj == null) {     // 登录信息为 null，表示没有登录
+                return "redirect:/login";
+            }
+            String loginname = (String) obj;
+            int loginId = Integer.parseInt(loginname);
+            Basicinformation basicinformation=basicinformationService.selectUserById(loginId);
+            if (basicinformation==null){
+                //System.out.println("wrong");
+                basicinformation = new Basicinformation();
+                basicinformation.setId(loginId);
+                basicinformationService.insertUser(basicinformation);
+            }
+            model.addAttribute("basicinformation", basicinformation);
+        } finally {
+            PageHelper.clearPage();
+        }
+
+        return "teacher/basicinformation";
+    }
+
+    @RequestMapping("/user/teacher/basicinformation/modify")
+    public String basicmodify2(Basicinformation info){
+
+        basicinformationService.updateUser(info);
+        return "redirect:/user/teacher/basicinformation";
+    }
 }

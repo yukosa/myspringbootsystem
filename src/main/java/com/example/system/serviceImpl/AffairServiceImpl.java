@@ -17,7 +17,7 @@ public class AffairServiceImpl implements AffairService{
     AffairMapper affairMapper;
 
     @Override
-
+    public List<Affair> getAffairByStatus(int status){return affairMapper.getAffairByStatus(status);}
     public Affair getAffairByUid(int uid){return affairMapper.getAffairByUid(uid);}
     //根据ID查询用户信息
     public List<Affair> selectUserById(int id) {return affairMapper.selectUserById(id);}

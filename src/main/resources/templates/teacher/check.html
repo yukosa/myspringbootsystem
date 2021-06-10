@@ -38,9 +38,9 @@
 <body class="sb-nav-fixed">
 
 
-<div th:replace="~{commons/common::nvbar}"></div>
+<div th:replace="~{commons/tcommon::nvbar}"></div>
 <div id="layoutSidenav">
-    <div th:replace="~{commons/common::sidebar}"></div>
+    <div th:replace="~{commons/tcommon::sidebar}"></div>
 
 
 
@@ -48,10 +48,10 @@
         <main>
 
             <div class="container-fluid">
-                <h1 class="mt-4">申请记录查看</h1>
+                <h1 class="mt-4">申请审核</h1>
                 <ol class="breadcrumb mb-4">
-                    <li class="breadcrumb-item"><a th:href="@{/user/student}">Dashboard</a></li>
-                    <li class="breadcrumb-item active">申请记录</li>
+                    <li class="breadcrumb-item"><a th:href="@{/user/teacher}">Dashboard</a></li>
+                    <li class="breadcrumb-item active">申请审核</li>
                 </ol>
 
 
@@ -62,7 +62,6 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <h2><a class = "btn btn-sm btn-success" th:href="@{/user/affair}">事务申请</a></h2>
                     <div class="table-responsive" id="confirmld" th:fragment="ld" >
                         <!--text-nowrap-->
                         <table class="table table-bordered "  id="dataTable"  cellspacing="0" >
@@ -80,7 +79,8 @@
                             <tbody >
                             <tr  th:each="affair:${pageInfo.getList()}" >
                                 <td>
-                                    <a class = "btn btn-sm btn-primary" th:href="@{/user/affair/querry/myaffair/}+${affair.getUid()}">查看</a>
+                                    <a class = "btn btn-sm btn-primary" th:href="@{/user/teacher/affair/allow/}+${affair.getUid()}">通过</a>
+                                    <a class = "btn btn-sm btn-primary" th:href="@{/user/teacher/affair/refuse/}+${affair.getUid()}">拒绝</a>
                                 </td>
                                 <td th:text="${affair.getId()}"></td>
                                 <td th:text="${affair.getName()}"></td>
@@ -101,30 +101,30 @@
                         </div>
                         <ul class="pagination pull-right no-margin">
                             <li th:if="${pageInfo.hasPreviousPage}">
-                                <a th:href="'/user/affair/querry?pageNum=1'">首页</a>
+                                <a th:href="'/user/teacher/affair/check?pageNum=1'">首页</a>
                             </li>
 
                             <li class="prev" th:if="${pageInfo.hasPreviousPage}">
-                                <a th:href="'/user/affair/querry?pageNum='+${pageInfo.prePage}">
+                                <a th:href="'/user/teacher/affair/check?pageNum='+${pageInfo.prePage}">
                                     <i class="ace-icon fa fa-angle-double-left"></i>
                                 </a>
                             </li>
                             <!--遍历条数-->
                             <li th:each="nav:${pageInfo.navigatepageNums}">
-                                <a th:href="'/user/affair/querry?pageNum='+${nav}" th:text="${nav}"
+                                <a th:href="'/user/teacher/affair/check?pageNum='+${nav}" th:text="${nav}"
                                    th:if="${nav != pageInfo.pageNum}"></a>
                                 <span style="font-weight: bold;background: #6faed9;" th:if="${nav == pageInfo.pageNum}"
                                       th:text="${nav}"></span>
                             </li>
 
                             <li class="next" th:if="${pageInfo.hasNextPage}">
-                                <a th:href="'/user/affair/querry?pageNum='+${pageInfo.nextPage}">
+                                <a th:href="'/user/teacher/affair/check?pageNum='+${pageInfo.nextPage}">
                                     <i class="ace-icon fa fa-angle-double-right"></i>
                                 </a>
                             </li>
 
                             <li>
-                                <a th:href="'/user/affair/querry?pageNum='+${pageInfo.pages}">尾页</a>
+                                <a th:href="'/user/teacher/affair/check?pageNum='+${pageInfo.pages}">尾页</a>
                             </li>
 
                     </div>

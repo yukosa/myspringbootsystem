@@ -78,7 +78,7 @@ public class affairController {
             int loginId = Integer.parseInt(loginname);
             List<Affair> affairs = affairService.selectUserById(loginId);
 
-            System.out.println("分页数据"+affairs);
+//            System.out.println("分页数据"+affairs);
             PageInfo<Affair> pageInfo = new PageInfo<Affair>(affairs, pageSize);
             model.addAttribute("pageInfo", pageInfo);
         } finally {
@@ -106,5 +106,97 @@ public class affairController {
         }
 
         return "student/myaffair";
+    }
+
+    @RequestMapping("/user/teacher/affair/check")
+    public String checkaffair(Model model,HttpServletRequest request,
+                               @RequestParam(required = false, defaultValue = "1", value = "pageNum") Integer pageNum,
+                               @RequestParam(defaultValue = "5", value = "pageSize") Integer pageSize){
+        if (pageNum == null) {
+            pageNum = 1;   //设置默认当前页
+        }
+        if (pageNum <= 0) {
+            pageNum = 1;
+        }
+        if (pageSize == null) {
+            pageSize = 5;    //设置默认每页显示的数据数
+        }
+
+        PageHelper.startPage(pageNum, pageSize);
+        try {
+            HttpSession session = request.getSession();       // 获取登录信息
+            Object obj = session.getAttribute("username");
+            if (obj == null) {     // 登录信息为 null，表示没有登录
+                return "redirect:/login";
+            }
+            String loginname = (String) obj;
+            int loginId = Integer.parseInt(loginname);
+            List<Affair> affairs = affairService.getAffairByStatus(0);
+//            System.out.println("分页数据"+affairs);
+            PageInfo<Affair> pageInfo = new PageInfo<Affair>(affairs, pageSize);
+            model.addAttribute("pageInfo", pageInfo);
+        } finally {
+            PageHelper.clearPage();
+        }
+
+        return "teacher/check";
+    }
+    @RequestMapping("/user/teacher/affair/allow/{uid}")
+    public String affairallow(Model model,@PathVariable("uid")int uid){
+        Affair affair=affairService.getAffairByUid(uid);
+        affair.status =1;
+        affair.pass=1;
+        affairService.updateUser(affair);
+        return "redirect:/user/teacher/affair/check";
+    }
+
+    @RequestMapping("/user/teacher/affair/checked")
+    public String checkedaffair(Model model,HttpServletRequest request,
+                              @RequestParam(required = false, defaultValue = "1", value = "pageNum") Integer pageNum,
+                              @RequestParam(defaultValue = "5", value = "pageSize") Integer pageSize){
+        if (pageNum == null) {
+            pageNum = 1;   //设置默认当前页
+        }
+        if (pageNum <= 0) {
+            pageNum = 1;
+        }
+        if (pageSize == null) {
+            pageSize = 5;    //设置默认每页显示的数据数
+        }
+
+        PageHelper.startPage(pageNum, pageSize);
+        try {
+            HttpSession session = request.getSession();       // 获取登录信息
+            Object obj = session.getAttribute("username");
+            if (obj == null) {     // 登录信息为 null，表示没有登录
+                return "redirect:/login";
+            }
+            String loginname = (String) obj;
+            int loginId = Integer.parseInt(loginname);
+            List<Affair> affairs = affairService.getAffairByStatus(1);
+//            System.out.println("分页数据"+affairs);
+            PageInfo<Affair> pageInfo = new PageInfo<Affair>(affairs, pageSize);
+            model.addAttribute("pageInfo", pageInfo);
+        } finally {
+            PageHelper.clearPage();
+        }
+
+        return "teacher/checked";
+    }
+    @RequestMapping("/user/teacher/affair/refuse/{uid}")
+    public String affairrefuse(Model model,@PathVariable("uid")int uid){
+        Affair affair=affairService.getAffairByUid(uid);
+        affair.status =1;
+        affair.pass=0;
+        affairService.updateUser(affair);
+        return "redirect:/user/teacher/affair/check";
+    }
+    @RequestMapping("/user/teacher/affair/change/{uid}")
+    public String affairchange(Model model,@PathVariable("uid")int uid){
+        Affair affair=affairService.getAffairByUid(uid);
+        if(affair.pass ==1)affair.pass=0;
+        else affair.pass=1;
+        affairService.updateUser(affair);
+        return "redirect:/user/teacher/affair/checked";
     }
 }

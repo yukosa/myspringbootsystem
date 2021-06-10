@@ -12,6 +12,7 @@ import java.util.List;
 @Repository
 public interface AffairMapper {
     Affair getAffairByUid(int uid);
+    List<Affair> getAffairByStatus(int status);
     //根据ID查询用户信息
     List<Affair> selectUserById(int id);
 

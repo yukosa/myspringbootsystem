@@ -9,6 +9,7 @@
     <title>Charts - SB Admin</title>
     <link th:href="@{/css/styles.css}" rel="stylesheet" />
     <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.1.2/dist/echarts.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
 </head>
 <body class="sb-nav-fixed">
@@ -45,6 +46,32 @@
 
 
                 </div>
+                <div id="mainchart" style="width: 600px;height:400px;"></div>
+                <script th:inline="javascript">
+                    // 基于准备好的dom，初始化echarts实例
+                    var a = '[[${a}]]'
+                    var b = '[[${b}]]'
+                    var myChart = echarts.init(document.getElementById('mainchart'))
+                    myChart.setOption({
+                        title: {
+                            text: '今日填报'
+                        },
+                        series : [
+                            {
+                                name: '今日填报占比',
+                                type: 'pie',
+                                radius: '55%',
+                                data:[
+                                    {value: a, name:'填报'+a+'人'},
+                                    {value: b, name:'未填报'+b+"人"},
+                                    // {value:310, name:'邮件营销'},
+                                    // {value:335, name:'直接访问'},
+                                    // {value:400, name:'搜索引擎'}
+                                ]
+                            }
+                        ]
+                    })
+                </script>
             </div>
         </main>
         <footer class="py-4 bg-light mt-auto">

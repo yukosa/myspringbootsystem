@@ -40,6 +40,8 @@
 
     <!--查询所有用户信息，返回一个List<Bean>-->
 
-
     <select resultType="com.example.system.bean.User" id="getAllUser">SELECT * FROM user </select>
+
+
+    <select resultType="int" id="getAllUserNum">SELECT count(*) FROM user where identity != 2</select>
 </mapper>

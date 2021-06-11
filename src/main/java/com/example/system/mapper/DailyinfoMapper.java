@@ -26,4 +26,6 @@ public interface DailyinfoMapper {
     int addinfo(Dailyinfo dailyindo);
 
     List<Basicinformation> getWhiteList();
+
+    int getTodayNum();
 }

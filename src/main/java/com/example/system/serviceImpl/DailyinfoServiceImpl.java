@@ -53,4 +53,7 @@ public class DailyinfoServiceImpl implements DailyinfoService {
     public List<Basicinformation> getWhiteList(){
         return dailyinfoMapper.getWhiteList();
     }
+
+    @Override
+    public int getTodayNum(){ return dailyinfoMapper.getTodayNum();}
 }

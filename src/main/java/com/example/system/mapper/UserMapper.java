@@ -31,4 +31,8 @@ public interface UserMapper {
     //查询所有用户
     List<User> getAllUser();
 
+    //查询需要填报的总用户数量
+    int getAllUserNum();
+
+
 }

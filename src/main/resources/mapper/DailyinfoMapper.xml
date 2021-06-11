@@ -33,4 +33,8 @@
         INSERT InTO dailyinfo(id,fillingDate,fill,temOfAm,temOfPm,health,position,address,mIsolation,outside,touchInfected,crossed,travelHRA,touchHRA,returned)
         values(#{id},CURRENT_TIMESTAMP,#{fill},#{temOfAm},#{temOfPm},#{health},#{position},#{address},#{mIsolation},#{outside},#{touchInfected},#{crossed},#{travelHRA},#{touchHRA},#{returned})
     </insert>
+
+    <select id="getTodayNum" resultType="int">
+        SELECT count(*) FROM dailyinfo WHERE year(fillingDate)=year(now()) and month(fillingDate) = month(now()) and day(fillingDate) = day(now());
+    </select>
 </mapper>

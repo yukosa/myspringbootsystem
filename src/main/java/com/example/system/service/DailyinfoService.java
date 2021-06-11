@@ -20,4 +20,6 @@ public interface DailyinfoService {
     int addinfo(Dailyinfo dailyindo);
 
     List<Basicinformation> getWhiteList();
+
+    int getTodayNum();
 }

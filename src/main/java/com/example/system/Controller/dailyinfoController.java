@@ -5,14 +5,12 @@ package com.example.system.Controller;
 import com.alibaba.excel.ExcelWriter;
 import com.alibaba.excel.metadata.Sheet;
 import com.alibaba.excel.support.ExcelTypeEnum;
-import com.example.system.bean.Basicinformation;
-import com.example.system.bean.Dailyinfo;
-import com.example.system.bean.DailyinfoExcel;
-import com.example.system.bean.User;
+import com.example.system.bean.*;
 import com.example.system.mapper.UserMapper;
 import com.example.system.service.DailyinfoExcelService;
 import com.example.system.service.DailyinfoService;
 import com.example.system.service.UserService;
+import com.example.system.service.WhiteListExcelService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.apache.catalina.Session;
@@ -47,6 +45,8 @@ public class dailyinfoController {
     UserService userService;
     @Autowired
     DailyinfoExcelService dailyinfoExcelService;
+    @Autowired
+    WhiteListExcelService whiteListExcelService;
     @RequestMapping("/user/teacher/dailyinfo/global")
     public String gloabalfresh(Model model,HttpServletRequest request){
         HttpSession session = request.getSession();       // 获取登录信息
@@ -359,6 +359,41 @@ public class dailyinfoController {
         model.addAttribute("whitelist",whitelist);
         return "teacher/whiteList";
     }
+
+    @GetMapping("/user/dailyinfo/getWhiteList")
+    public void download(HttpServletResponse response) throws IOException {
+        ExcelWriter writer = null;
+        OutputStream out = null;
+        try {
+            List<WhiteListExcel> whiteList=whiteListExcelService.getWhiteList();
+            out = response.getOutputStream();
+            writer = new ExcelWriter(out, ExcelTypeEnum.XLSX);
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            String today=simpleDateFormat.format(new Date());
+            String fileName =  today+ "白名单";
+            Sheet sheet = new Sheet(1, 0, WhiteListExcel.class);
+            sheet.setSheetName(today+ "白名单");
+            writer.write(whiteList, sheet);
+            response.setCharacterEncoding("utf-8");
+            response.setContentType("application/vnd.ms-excel;charset=utf-8");
+            response.setHeader("Content-Disposition", "attachment;filename=" + new String((fileName + ".xlsx").getBytes(), "ISO8859-1"));
+            out.flush();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (writer != null) {
+                writer.finish();
+            }
+            if (out != null) {
+                try {
+                    out.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
 
     @GetMapping("/user/teacher/dailyinfo/write/add")
     public String toAddpage2(){

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.system.mapper.WhiteListExcelMapper">
+
+    <select id="getWhiteList" resultType="com.example.system.bean.WhiteListExcel">
+        select basicinformation.id,basicinformation.name,basicinformation.sex,basicinformation.age,basicinformation.idCardNo,basicinformation.phoneNum,basicinformation.college,basicinformation.residence
+        from dailyinfo,basicinformation where dailyinfo.id=basicinformation.id and
+            timestampdiff(day,fillingDate,CURRENT_TIMESTAMP) &lt;= 14 and fill=true and temofAm
+                between 36 and 37.2 and temofPm between 36 and 37.2 and mIsolation = false and touchInfected = false and crossed
+                =false and travelHRA =false and touchHRA = false
+    </select>
+
+
+</mapper>

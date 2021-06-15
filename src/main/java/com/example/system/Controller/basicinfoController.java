@@ -52,7 +52,7 @@ public class basicinfoController {
         } finally {
             PageHelper.clearPage();
         }
-        if(identity=="0"){
+        if(identity.equals("0")){
             return "student/basicinformation";
         }
         else{

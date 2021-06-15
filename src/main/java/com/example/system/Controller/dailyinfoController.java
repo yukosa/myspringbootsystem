@@ -117,7 +117,7 @@ public class dailyinfoController {
         } finally {
             PageHelper.clearPage();
         }
-        if(identity=="0"){
+        if(identity.equals("0")){
             return "student/dailyquerry";
         }
         else{
@@ -260,7 +260,7 @@ public class dailyinfoController {
         } finally {
             PageHelper.clearPage();
         }
-        if(identity=="0"){
+        if(identity.equals("0") ){
             return "student/dailywrite";
         }
         else{

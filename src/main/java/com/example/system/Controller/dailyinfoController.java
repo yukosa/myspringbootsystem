@@ -48,7 +48,18 @@ public class dailyinfoController {
     @Autowired
     DailyinfoExcelService dailyinfoExcelService;
     @RequestMapping("/user/teacher/dailyinfo/global")
-    public String gloabalfresh(Model model){
+    public String gloabalfresh(Model model,HttpServletRequest request){
+        HttpSession session = request.getSession();       // 获取登录信息
+        Object obj = session.getAttribute("username");
+        if (obj == null) {     // 登录信息为 null，表示没有登录
+            return "redirect:/login";
+        }
+        Object obj1 = session.getAttribute("identity");
+        String loginIdentity = (String) obj1;                    // 强制转换成 String
+        // 如果权限不足就返回主界面
+        if (loginIdentity.equals("0")) {
+            return "redirect:/index";
+        }
         model.addAttribute("dailyinfos",null);
         model.addAttribute("pageInfo", null);
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -60,7 +71,8 @@ public class dailyinfoController {
     @RequestMapping("/user/teacher/dailyinfo/local")
     public String usermanage(Model model,
                              @RequestParam(required = false,defaultValue="1",value="pageNum")Integer pageNum,
-                             @RequestParam(defaultValue="5",value="pageSize")Integer pageSize) {
+                             @RequestParam(defaultValue="5",value="pageSize")Integer pageSize,
+                             HttpServletRequest request) {
         if (pageNum == null) {
             pageNum = 1;   //设置默认当前页
         }
@@ -72,6 +84,17 @@ public class dailyinfoController {
         };
         PageHelper.startPage(pageNum, pageSize);
         try {
+            HttpSession session = request.getSession();       // 获取登录信息
+            Object obj = session.getAttribute("username");
+            if (obj == null) {     // 登录信息为 null，表示没有登录
+                return "redirect:/login";
+            }
+            Object obj1 = session.getAttribute("identity");
+            String loginIdentity = (String) obj1;                    // 强制转换成 String
+            // 如果权限不足就返回主界面
+            if (loginIdentity.equals("0")) {
+                return "redirect:/index";
+            }
             List<Dailyinfo> dailyinfos= dailyinfoService.queryAll();
             model.addAttribute("dailyinfos",dailyinfos);
             PageInfo<Dailyinfo> pageInfo = new PageInfo<Dailyinfo>(dailyinfos, pageSize);
@@ -148,6 +171,12 @@ public class dailyinfoController {
             Object obj = session.getAttribute("username");
             if (obj == null) {     // 登录信息为 null，表示没有登录
                 return "redirect:/login";
+            }
+            Object obj1 = session.getAttribute("identity");
+            String loginIdentity = (String) obj1;                    // 强制转换成 String
+            // 如果权限不足就返回主界面
+            if (loginIdentity.equals("0")) {
+                return "redirect:/index";
             }
             String loginname = (String) obj;
             int loginId = Integer.parseInt(loginname);
@@ -228,6 +257,12 @@ public class dailyinfoController {
             if (obj == null) {     // 登录信息为 null，表示没有登录
                 return "redirect:/login";
             }
+            Object obj1 = session.getAttribute("identity");
+            String loginIdentity = (String) obj1;                    // 强制转换成 String
+            // 如果权限不足就返回主界面
+            if (loginIdentity.equals("0")) {
+                return "redirect:/index";
+            }
             String loginname = (String) obj;
             int loginId = Integer.parseInt(loginname);
             Dailyinfo dailyinfo = dailyinfoService.queryByNum(num);
@@ -278,6 +313,12 @@ public class dailyinfoController {
             if (obj == null) {     // 登录信息为 null，表示没有登录
                 return "redirect:/login";
             }
+            Object obj1 = session.getAttribute("identity");
+            String loginIdentity = (String) obj1;                    // 强制转换成 String
+            // 如果权限不足就返回主界面
+            if (loginIdentity.equals("0")) {
+                return "redirect:/index";
+            }
             String loginname = (String) obj;
             int loginId = Integer.parseInt(loginname);
             Date date = new Date(System.currentTimeMillis());
@@ -302,7 +343,18 @@ public class dailyinfoController {
         return "redirect:/user/dailyinfo/querry";
     }
     @GetMapping("/user/teacher/dailyinfo/whitelist")
-    public String createWhiteList(Model model){
+    public String createWhiteList(Model model,HttpServletRequest request){
+        HttpSession session = request.getSession();       // 获取登录信息
+        Object obj = session.getAttribute("username");
+        if (obj == null) {     // 登录信息为 null，表示没有登录
+            return "redirect:/login";
+        }
+        Object obj1 = session.getAttribute("identity");
+        String loginIdentity = (String) obj1;                    // 强制转换成 String
+        // 如果权限不足就返回主界面
+        if (loginIdentity.equals("0")) {
+            return "redirect:/index";
+        }
         List<Basicinformation> whitelist=dailyinfoService.getWhiteList();
         model.addAttribute("whitelist",whitelist);
         return "teacher/whiteList";
@@ -314,10 +366,57 @@ public class dailyinfoController {
     }
 
     @PostMapping("/user/teacher/dailyinfo/write/add")
-    public String AddInfo2(Dailyinfo dailyinfo){
+    public String AddInfo2(Dailyinfo dailyinfo,HttpServletRequest request){
+        HttpSession session = request.getSession();       // 获取登录信息
+        Object obj = session.getAttribute("username");
+        if (obj == null) {     // 登录信息为 null，表示没有登录
+            return "redirect:/login";
+        }
+        Object obj1 = session.getAttribute("identity");
+        String loginIdentity = (String) obj1;                    // 强制转换成 String
+        // 如果权限不足就返回主界面
+        if (loginIdentity.equals("0")) {
+            return "redirect:/index";
+        }
         dailyinfoService.addinfo(dailyinfo);
 
         return "redirect:/user/teacher/dailyinfo/querry";
     }
 
+    @RequestMapping("/user/quickdailyinfo")
+    public String quickdailywrite(Model model,HttpServletRequest request) {
+
+        try {
+            HttpSession session = request.getSession();       // 获取登录信息
+            Object obj = session.getAttribute("username");
+            if (obj == null) {     // 登录信息为 null，表示没有登录
+                return "redirect:/login";
+            }
+            String loginname = (String) obj;
+            int loginId = Integer.parseInt(loginname);
+            Date date = new Date(System.currentTimeMillis());
+            model.addAttribute("id", loginId);
+            model.addAttribute("date", date);
+        } finally {
+            PageHelper.clearPage();
+        }
+        return "quickdailywrite";
+    }
+
+    @PostMapping("/quickdailyinfo/write/add")
+    public String quickAddInfo(Dailyinfo dailyinfo,Model model,HttpServletRequest request){
+        dailyinfoService.addinfo(dailyinfo);
+        model.addAttribute("msg","填报成功");
+        HttpSession session = request.getSession();       // 获取登录信息
+        Object obj = session.getAttribute("username");
+        if (obj == null) {     // 登录信息为 null，表示没有登录
+            return "redirect:/login";
+        }
+        String loginname = (String) obj;
+        int loginId = Integer.parseInt(loginname);
+        Date date = new Date(System.currentTimeMillis());
+        model.addAttribute("id", loginId);
+        model.addAttribute("date", date);
+        return "quickdailywrite";
+    }
 }

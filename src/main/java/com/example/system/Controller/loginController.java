@@ -3,18 +3,23 @@ package com.example.system.Controller;
 
 import com.example.system.bean.User;
 import com.example.system.service.UserService;
+import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.thymeleaf.util.StringUtils;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
+import java.util.Map;
+
 
 @Controller
 public class loginController {
@@ -64,5 +69,49 @@ public class loginController {
         response.addCookie(cookie_username);
         return "login";
     }
+
+    @RequestMapping("/user/passwd")
+    public String passwd( Model model,HttpServletRequest request) {
+        try {
+            HttpSession session = request.getSession();       // 获取登录信息
+            Object obj = session.getAttribute("username");
+            if (obj == null) {     // 登录信息为 null，表示没有登录
+                return "redirect:/login";
+            }
+            String loginname = (String) obj;
+            int loginId = Integer.parseInt(loginname);
+            User user=userService.getUserById(loginId);
+            String name=user.getUserName();
+            model.addAttribute("id", loginId);
+            model.addAttribute("name", name);
+            return "editpasswd";
+        } finally {
+            PageHelper.clearPage();
+        }
+    }
+    @RequestMapping("/user/passwd/edit")
+    public String editpasswd(@RequestParam("id") int id,
+                             @RequestParam("name") String name,
+                          @RequestParam("pwd") String pwd,
+                          @RequestParam("npwd")String npwd,
+                          Model model,HttpServletRequest request) {
+        int flag = 0;
+        User user=userService.getUserById(id);
+        if(user.getPwd().equals(pwd)){
+            flag=1;
+            user.setPwd(npwd);
+        }
+        userService.modifyUser(user);
+        if(flag == 1){
+            model.addAttribute("msg","修改密码成功");
+        }else {
+            model.addAttribute("msg","修改密码失败");
+        }
+        model.addAttribute("id", id);
+        model.addAttribute("name", name);
+        return "editpasswd";
+    }
+
+
 }
 

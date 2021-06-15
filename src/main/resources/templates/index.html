@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <title>index</title>
@@ -8,37 +8,65 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
 </head>
 <body>
-    <div class="card col-sm-10">
-        <!--公告板-->
-        <div id="showBoard" class="card-body">
-        </div>
+<body background="img/背景.jpg"
+      style=" background-repeat:no-repeat ;
+      background-size:100% 100%;
+      background-attachment: fixed;"
+></body>
+<div th:replace="~{commons/common::nvbar}"></div>
+<div class="card col-sm-10">
+    <!--公告板-->
+    <div id="showBoard" class="card-body">
+    </div>
 
-        <script>
-            $(document).ready(function (){
-                $.get("/user/getNotice",function (data){
-                    if(data!=null){
-                        document.getElementById("showBoard").innerText=data;
-                    }
-                    else{
-                        document.getElementById("showBoard").innerText="暂无消息";
-                    }
-                })
-            });
-        </script>
+    <script>
+        $(document).ready(function (){
+            $.get("/user/getNotice",function (data){
+                if(data!=null){
+                    document.getElementById("showBoard").innerText=data;
+                }
+                else{
+                    document.getElementById("showBoard").innerText="暂无消息";
+                }
+            })
+        });
+    </script>
 
+</div>
+<h2>疫情登记系统</h2>
+<hr />
+<div class="brief">
+    <p>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;为提升疫情防控效率，确保游客出口科学有序地开展新型冠状病毒感染的肺炎疫情防控工作，及早发现高危人员与高危地区人员筛查病例，有效遏制疫情扩散和蔓延，减少新型冠状病毒感染对公众健康造成的危害，依据《中华人民共和国传染病防治法》《中华人民共和国基本医疗卫生与健康促进法》《突发公共卫生事件应急条例》《突发公共卫生事件应急预案》《新型冠状病毒感染的肺炎病例监测方案》等相关文件规定
+    </p>
+    <div align="center"><img src="img/p2.png" style="width: 691px;height: 125px;" /></div>
+    <br>
+    <div align="center">
+        <a href="/user/student">学生入口</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <a href="/user/teacher">老师入口</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <a href="/user/manage">管理入口</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <a href="/user/quickdailyinfo">快速疫情填报</a>
+    </div>
+    <br>
+    <div align="center"><img src="img/p1.png" style="width: 492px;height: 114px;" /></div>
+    <br>
+    <div align="center">
+        <a href="/user/quickbasicinfo">快速基本信息填报</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
     </div>
-    <a href="/user/student">学生入口</a>
-    <a href="/user/teacher">老师入口</a>
-    <a href="/user/manage">管理入口</a>
-    <a href="/user/dailyinfo">快速疫情填报</a>
-    <a href="/user/basicinfo">快速基本信息填报</a>
-    <a href="/situation">疫情最新状况</a>
-    <a href="/user/return">快速返校信息填报</a>
+    <p>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;通过学校登记的方式，实时监测该区域人员的路线情况。科学有序地开展新型冠状病毒感染的肺炎疫情防控工作，为减轻防疫监管人员工作强度和有效遏制疫情扩散和蔓延提供辅助支持。
+    </p>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-    <script th:src="@{/js/scripts.js}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
+</div>
+</div>
+</div>
+<hr />
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+<script th:src="@{/js/scripts.js}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
 </body>
 
-</html>
+
+

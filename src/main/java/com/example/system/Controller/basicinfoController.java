@@ -76,6 +76,12 @@ public class basicinfoController {
             if (obj == null) {     // 登录信息为 null，表示没有登录
                 return "redirect:/login";
             }
+            Object obj1 = session.getAttribute("identity");
+            String loginIdentity = (String) obj1;                    // 强制转换成 String
+            // 如果权限不足就返回主界面
+            if (loginIdentity.equals("0")) {
+                return "redirect:/index";
+            }
             String loginname = (String) obj;
             int loginId = Integer.parseInt(loginname);
             Basicinformation basicinformation=basicinformationService.selectUserById(loginId);
@@ -94,9 +100,68 @@ public class basicinfoController {
     }
 
     @RequestMapping("/user/teacher/basicinformation/modify")
-    public String basicmodify2(Basicinformation info){
-
+    public String basicmodify2(Basicinformation info,HttpServletRequest request){
+        HttpSession session = request.getSession();       // 获取登录信息
+        Object obj = session.getAttribute("username");
+        if (obj == null) {     // 登录信息为 null，表示没有登录
+            return "redirect:/login";
+        }
+        Object obj1 = session.getAttribute("identity");
+        String loginIdentity = (String) obj1;                    // 强制转换成 String
+        // 如果权限不足就返回主界面
+        if (loginIdentity.equals("0")) {
+            return "redirect:/index";
+        }
         basicinformationService.updateUser(info);
         return "redirect:/user/teacher/basicinformation";
+    }
+
+    @RequestMapping("/user/quickbasicinfo")
+    public String quickbasicwrite(Model model,HttpServletRequest request){
+        String identity;
+        try {
+            HttpSession session = request.getSession();       // 获取登录信息
+            Object obj = session.getAttribute("username");
+            if (obj == null) {     // 登录信息为 null，表示没有登录
+                return "redirect:/login";
+            }
+
+            String loginname = (String) obj;
+            int loginId = Integer.parseInt(loginname);
+            identity= (String) session.getAttribute("identity");
+            Basicinformation basicinformation=basicinformationService.selectUserById(loginId);
+            if (basicinformation==null){
+                //System.out.println("wrong");
+                basicinformation = new Basicinformation();
+                basicinformation.setId(loginId);
+                basicinformationService.insertUser(basicinformation);
+            }
+            model.addAttribute("basicinformation", basicinformation);
+        } finally {
+            PageHelper.clearPage();
+        }
+        return "quickbasicinformation";
+    }
+
+    @RequestMapping("/quickbasicinformation/modify")
+    public String quickbasicmodify(Basicinformation info,Model model,HttpServletRequest request) {
+        basicinformationService.updateUser(info);
+        model.addAttribute("msg","填写成功");
+        HttpSession session = request.getSession();       // 获取登录信息
+        Object obj = session.getAttribute("username");
+        if (obj == null) {     // 登录信息为 null，表示没有登录
+            return "redirect:/login";
+        }
+        String loginname = (String) obj;
+        int loginId = Integer.parseInt(loginname);
+        Basicinformation basicinformation=basicinformationService.selectUserById(loginId);
+        if (basicinformation==null){
+            //System.out.println("wrong");
+            basicinformation = new Basicinformation();
+            basicinformation.setId(loginId);
+            basicinformationService.insertUser(basicinformation);
+        }
+        model.addAttribute("basicinformation", basicinformation);
+        return "quickbasicinformation";
     }
 }

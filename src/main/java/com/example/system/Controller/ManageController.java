@@ -30,7 +30,6 @@ public class ManageController {
 //        System.out.println("?AAAAAAAAAAAAAAAAAAAAAAAA");
         HttpSession session = request.getSession();       // 获取登录信息
         Object obj = session.getAttribute("identity");
-        // 没有登录，返回登录页面
         if (obj == null) {     // 登录信息为 null，表示没有登录
             return "redirect:/login";
         }
@@ -55,6 +54,7 @@ public class ManageController {
     //    用户修改页面
     @RequestMapping("/user/manage/muser")
     public String globalfresh(Model model,
+                              HttpServletRequest request,
                               @RequestParam(required = false, defaultValue = "1", value = "pageNum") Integer pageNum,
                               @RequestParam(defaultValue = "5", value = "pageSize") Integer pageSize) {
         if (pageNum == null) {
@@ -73,6 +73,17 @@ public class ManageController {
 
         PageHelper.startPage(pageNum, pageSize);
         try {
+            HttpSession session = request.getSession();       // 获取登录信息
+            Object obj = session.getAttribute("username");
+            if (obj == null) {     // 登录信息为 null，表示没有登录
+                return "redirect:/login";
+            }
+            Object obj1 = session.getAttribute("identity");
+            String loginIdentity = (String) obj1;                    // 强制转换成 String
+            // 如果权限不足就返回主界面
+            if (loginIdentity.equals("0")||loginIdentity.equals("1")) {
+                return "redirect:/index";
+            }
             List<User> userinfos = userService.getAllUser();
 //            System.out.println("分页数据"+userinfos);
             PageInfo<User> pageInfo = new PageInfo<User>(userinfos, pageSize);
@@ -89,13 +100,35 @@ public class ManageController {
 
     //    用户添加页面
     @GetMapping("/user/manage/muser/add")
-    public String toAddpage() {
+    public String toAddpage(HttpServletRequest request) {
+        HttpSession session = request.getSession();       // 获取登录信息
+        Object obj = session.getAttribute("username");
+        if (obj == null) {     // 登录信息为 null，表示没有登录
+            return "redirect:/login";
+        }
+        Object obj1 = session.getAttribute("identity");
+        String loginIdentity = (String) obj1;                    // 强制转换成 String
+        // 如果权限不足就返回主界面
+        if (loginIdentity.equals("0")||loginIdentity.equals("1")) {
+            return "redirect:/index";
+        }
         return "/manage/adduser";
     }
 
     //    用户添加响应
     @PostMapping("/user/manage/muser/add")
-    public String Adduser(User user) {
+    public String Adduser(User user,HttpServletRequest request) {
+        HttpSession session = request.getSession();       // 获取登录信息
+        Object obj = session.getAttribute("username");
+        if (obj == null) {     // 登录信息为 null，表示没有登录
+            return "redirect:/login";
+        }
+        Object obj1 = session.getAttribute("identity");
+        String loginIdentity = (String) obj1;                    // 强制转换成 String
+        // 如果权限不足就返回主界面
+        if (loginIdentity.equals("0")||loginIdentity.equals("1")) {
+            return "redirect:/index";
+        }
         userService.addUser(user);
 
         return "redirect:/user/manage/muser";
@@ -103,8 +136,19 @@ public class ManageController {
 
     //    用户编辑页面
     @GetMapping("/user/manage/muser/edit/{id}")
-    public String toEdit(@PathVariable("id") Integer id, Model model) {
+    public String toEdit(@PathVariable("id") Integer id, Model model,HttpServletRequest request) {
 //        int idd = Integer.parseInt(id);
+        HttpSession session = request.getSession();       // 获取登录信息
+        Object obj = session.getAttribute("username");
+        if (obj == null) {     // 登录信息为 null，表示没有登录
+            return "redirect:/login";
+        }
+        Object obj1 = session.getAttribute("identity");
+        String loginIdentity = (String) obj1;                    // 强制转换成 String
+        // 如果权限不足就返回主界面
+        if (loginIdentity.equals("0")||loginIdentity.equals("1")) {
+            return "redirect:/index";
+        }
         User user = userService.getUserById(id);
         model.addAttribute("user", user);
         return "/manage/edituser";
@@ -112,15 +156,37 @@ public class ManageController {
 
     //    用户编辑响应
     @PostMapping("/user/manage/muser/edit")
-    public String Edituser(User user) {
+    public String Edituser(User user,HttpServletRequest request) {
 //        userService.addUser(user);
+        HttpSession session = request.getSession();       // 获取登录信息
+        Object obj = session.getAttribute("username");
+        if (obj == null) {     // 登录信息为 null，表示没有登录
+            return "redirect:/login";
+        }
+        Object obj1 = session.getAttribute("identity");
+        String loginIdentity = (String) obj1;                    // 强制转换成 String
+        // 如果权限不足就返回主界面
+        if (loginIdentity.equals("0")||loginIdentity.equals("1")) {
+            return "redirect:/index";
+        }
         userService.modifyUser(user);
         return "redirect:/user/manage/muser";
     }
 
     //    用户删除请求
     @GetMapping("/user/manage/muser/delete/{id}")
-    public String toDelete(@PathVariable("id") Integer id, Model model) {
+    public String toDelete(@PathVariable("id") Integer id, Model model,HttpServletRequest request) {
+        HttpSession session = request.getSession();       // 获取登录信息
+        Object obj = session.getAttribute("username");
+        if (obj == null) {     // 登录信息为 null，表示没有登录
+            return "redirect:/login";
+        }
+        Object obj1 = session.getAttribute("identity");
+        String loginIdentity = (String) obj1;                    // 强制转换成 String
+        // 如果权限不足就返回主界面
+        if (loginIdentity.equals("0")||loginIdentity.equals("1")) {
+            return "redirect:/index";
+        }
         userService.dropUser(id);
         return "redirect:/user/manage/muser";
     }
@@ -212,6 +278,7 @@ public class ManageController {
     //    基本信息修改主页
     @RequestMapping("/user/manage/mbasicinfo")
     public String getBasic(Model model,
+                           HttpServletRequest request,
                            @RequestParam(required = false, defaultValue = "1", value = "pageNum") Integer pageNum,
                            @RequestParam(defaultValue = "5", value = "pageSize") Integer pageSize) {
         if (pageNum == null) {
@@ -226,6 +293,17 @@ public class ManageController {
 
         PageHelper.startPage(pageNum, pageSize);
         try {
+            HttpSession session = request.getSession();       // 获取登录信息
+            Object obj = session.getAttribute("username");
+            if (obj == null) {     // 登录信息为 null，表示没有登录
+                return "redirect:/login";
+            }
+            Object obj1 = session.getAttribute("identity");
+            String loginIdentity = (String) obj1;                    // 强制转换成 String
+            // 如果权限不足就返回主界面
+            if (loginIdentity.equals("0")||loginIdentity.equals("1")) {
+                return "redirect:/index";
+            }
             List<Basicinformation> basicinfos = basicinformationService.getAllUser();
 //            System.out.println("分页数据"+basicinfos);
             PageInfo<Basicinformation> pageInfo = new PageInfo<Basicinformation>(basicinfos, pageSize);
@@ -239,7 +317,19 @@ public class ManageController {
 
     //    用户信息添加页面
     @GetMapping("/user/manage/mbasicinfo/add")
-    public String toAddBasic() {
+    public String toAddBasic(HttpServletRequest request) {
+
+        HttpSession session = request.getSession();       // 获取登录信息
+        Object obj = session.getAttribute("username");
+        if (obj == null) {     // 登录信息为 null，表示没有登录
+            return "redirect:/login";
+        }
+        Object obj1 = session.getAttribute("identity");
+        String loginIdentity = (String) obj1;                    // 强制转换成 String
+        // 如果权限不足就返回主界面
+        if (loginIdentity.equals("0")||loginIdentity.equals("1")) {
+            return "redirect:/index";
+        }
         return "/manage/addbasicinfo";
     }
 
@@ -254,8 +344,19 @@ public class ManageController {
 
     //    用户信息编辑页面
     @GetMapping("/user/manage/mbasicinfo/edit/{id}")
-    public String toEditt(@PathVariable("id") Integer id, Model model) {
+    public String toEditt(@PathVariable("id") Integer id, Model model,HttpServletRequest request) {
 //        int idd = Integer.parseInt(id);
+        HttpSession session = request.getSession();       // 获取登录信息
+        Object obj = session.getAttribute("username");
+        if (obj == null) {     // 登录信息为 null，表示没有登录
+            return "redirect:/login";
+        }
+        Object obj1 = session.getAttribute("identity");
+        String loginIdentity = (String) obj1;                    // 强制转换成 String
+        // 如果权限不足就返回主界面
+        if (loginIdentity.equals("0")||loginIdentity.equals("1")) {
+            return "redirect:/index";
+        }
         Basicinformation basicinformation = basicinformationService.selectUserById(id);
 //        User user =  userService.getUserById(id);
         model.addAttribute("basicinfo", basicinformation);
@@ -264,8 +365,19 @@ public class ManageController {
 
     //    用户信息编辑响应
     @PostMapping("/user/manage/mbasicinfo/edit")
-    public String Editbasicinfo(Basicinformation basicinformation) {
+    public String Editbasicinfo(Basicinformation basicinformation,HttpServletRequest request) {
 //        userService.addUser(user);
+        HttpSession session = request.getSession();       // 获取登录信息
+        Object obj = session.getAttribute("username");
+        if (obj == null) {     // 登录信息为 null，表示没有登录
+            return "redirect:/login";
+        }
+        Object obj1 = session.getAttribute("identity");
+        String loginIdentity = (String) obj1;                    // 强制转换成 String
+        // 如果权限不足就返回主界面
+        if (loginIdentity.equals("0")||loginIdentity.equals("1")) {
+            return "redirect:/index";
+        }
         basicinformationService.updateUser(basicinformation);
 //        userService.modifyUser(user);
         return "redirect:/user/manage/mbasicinfo";
@@ -273,8 +385,19 @@ public class ManageController {
 
     //    用户信息删除请求
     @GetMapping("/user/manage/mbasicinfo/delete/{id}")
-    public String Deletebasicinfo(@PathVariable("id") Integer id, Model model) {
+    public String Deletebasicinfo(@PathVariable("id") Integer id, Model model,HttpServletRequest request) {
 //        userService.dropUser(id);
+        HttpSession session = request.getSession();       // 获取登录信息
+        Object obj = session.getAttribute("username");
+        if (obj == null) {     // 登录信息为 null，表示没有登录
+            return "redirect:/login";
+        }
+        Object obj1 = session.getAttribute("identity");
+        String loginIdentity = (String) obj1;                    // 强制转换成 String
+        // 如果权限不足就返回主界面
+        if (loginIdentity.equals("0")||loginIdentity.equals("1")) {
+            return "redirect:/index";
+        }
         basicinformationService.deleteUser(id);
         return "redirect:/user/manage/mbasicinfo";
     }

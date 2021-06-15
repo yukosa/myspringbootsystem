@@ -44,6 +44,7 @@ public class affairController {
         } finally {
             PageHelper.clearPage();
         }
+
         return "student/affair";
     }
     @RequestMapping("/user/affair/commit")
@@ -129,6 +130,13 @@ public class affairController {
             if (obj == null) {     // 登录信息为 null，表示没有登录
                 return "redirect:/login";
             }
+            Object obj1 = session.getAttribute("identity");
+            String loginIdentity = (String) obj1;                    // 强制转换成 String
+            // 如果权限不足就返回主界面
+            if (loginIdentity.equals("0")) {
+                return "redirect:/index";
+            }
+
             String loginname = (String) obj;
             int loginId = Integer.parseInt(loginname);
             List<Affair> affairs = affairService.getAffairByStatus(0);
@@ -142,7 +150,18 @@ public class affairController {
         return "teacher/check";
     }
     @RequestMapping("/user/teacher/affair/allow/{uid}")
-    public String affairallow(Model model,@PathVariable("uid")int uid){
+    public String affairallow(Model model,@PathVariable("uid")int uid,HttpServletRequest request){
+        HttpSession session = request.getSession();       // 获取登录信息
+        Object obj = session.getAttribute("username");
+        if (obj == null) {     // 登录信息为 null，表示没有登录
+            return "redirect:/login";
+        }
+        Object obj1 = session.getAttribute("identity");
+        String loginIdentity = (String) obj1;                    // 强制转换成 String
+        // 如果权限不足就返回主界面
+        if (loginIdentity.equals("0")) {
+            return "redirect:/index";
+        }
         Affair affair=affairService.getAffairByUid(uid);
         affair.status =1;
         affair.pass=1;
@@ -171,6 +190,12 @@ public class affairController {
             if (obj == null) {     // 登录信息为 null，表示没有登录
                 return "redirect:/login";
             }
+            Object obj1 = session.getAttribute("identity");
+            String loginIdentity = (String) obj1;                    // 强制转换成 String
+            // 如果权限不足就返回主界面
+            if (loginIdentity.equals("0")) {
+                return "redirect:/index";
+            }
             String loginname = (String) obj;
             int loginId = Integer.parseInt(loginname);
             List<Affair> affairs = affairService.getAffairByStatus(1);
@@ -184,7 +209,18 @@ public class affairController {
         return "teacher/checked";
     }
     @RequestMapping("/user/teacher/affair/refuse/{uid}")
-    public String affairrefuse(Model model,@PathVariable("uid")int uid){
+    public String affairrefuse(Model model,@PathVariable("uid")int uid,HttpServletRequest request){
+        HttpSession session = request.getSession();       // 获取登录信息
+        Object obj = session.getAttribute("username");
+        if (obj == null) {     // 登录信息为 null，表示没有登录
+            return "redirect:/login";
+        }
+        Object obj1 = session.getAttribute("identity");
+        String loginIdentity = (String) obj1;                    // 强制转换成 String
+        // 如果权限不足就返回主界面
+        if (loginIdentity.equals("0")) {
+            return "redirect:/index";
+        }
         Affair affair=affairService.getAffairByUid(uid);
         affair.status =1;
         affair.pass=0;
@@ -192,7 +228,18 @@ public class affairController {
         return "redirect:/user/teacher/affair/check";
     }
     @RequestMapping("/user/teacher/affair/change/{uid}")
-    public String affairchange(Model model,@PathVariable("uid")int uid){
+    public String affairchange(Model model,@PathVariable("uid")int uid,HttpServletRequest request){
+        HttpSession session = request.getSession();       // 获取登录信息
+        Object obj = session.getAttribute("username");
+        if (obj == null) {     // 登录信息为 null，表示没有登录
+            return "redirect:/login";
+        }
+        Object obj1 = session.getAttribute("identity");
+        String loginIdentity = (String) obj1;                    // 强制转换成 String
+        // 如果权限不足就返回主界面
+        if (loginIdentity.equals("0")) {
+            return "redirect:/index";
+        }
         Affair affair=affairService.getAffairByUid(uid);
         if(affair.pass ==1)affair.pass=0;
         else affair.pass=1;

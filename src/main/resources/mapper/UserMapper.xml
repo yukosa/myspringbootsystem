@@ -36,7 +36,7 @@
     <!--根据ID修改用户信息，返回数据库操作影响行数，为0则是失败-->
 
 
-    <update parameterType="com.example.system.bean.User" id="updateUser">UPDATE user SET pwd = #{pwd},userName = #{userName},identity = #{identity}WHERE id = #{id} </update>
+    <update parameterType="com.example.system.bean.User" id="updateUser">UPDATE user SET pwd = #{pwd},userName = #{userName},identity = #{identity} WHERE id = #{id} </update>
 
     <!--查询所有用户信息，返回一个List<Bean>-->
 

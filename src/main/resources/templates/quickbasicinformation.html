@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <title>教师页面</title>
+    <title>快速基本信息填写</title>
 
 
     <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
@@ -40,20 +40,15 @@
 <body class="sb-nav-fixed">
 
 
-<div th:replace="~{commons/common::nvbar}"></div>
-<div id="layoutSidenav">
-    <div th:replace="~{commons/tcommon::sidebar}"></div>
-
-
-    <div id="layoutSidenav_content">
         <main>
             <div class="container-fluid">
                 <h1 class="mt-4">基本信息填写</h1>
                 <ol class="breadcrumb mb-4">
-                    <li class="breadcrumb-item"><a th:href="@{/user/teacher}">Dashboard</a></li>
+                    <li class="breadcrumb-item"><a th:href="@{/index}">主页</a></li>
                     <li class="breadcrumb-item active">基本信息填写</li>
                 </ol>
-                <form class="form-horizontal" th:action="@{/user/teacher/basicinformation/modify}" method="post">
+                <p style="color:#ff0000" th:text="${msg}" th:if="${! #strings.isEmpty(msg)}" ></p>
+                <form class="form-horizontal" th:action="@{/quickbasicinformation/modify}" method="post">
                     <div class="form-group">
                         <label  class="col-sm-2 control-label">学工号</label>
                         <div class="col-sm-10">
@@ -109,7 +104,7 @@
                     <div class="form-group">
                         <label  class="col-sm-2 control-label">校区</label>
                         <div class="col-sm-10">
-                             <input  th:value = " ${basicinformation.getCampus()}" class="form-control"  name = "campus" >
+                            <input  th:value = " ${basicinformation.getCampus()}" class="form-control"  name = "campus" >
                         </div>
                     </div>
                     <div class="form-group">
@@ -138,8 +133,7 @@
                 </form>
             </div>
         </main>
-    </div>
-</div>
+
 <script th:src="@{/js/scripts.js}"></script>
 <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
 <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js" crossorigin="anonymous"></script>

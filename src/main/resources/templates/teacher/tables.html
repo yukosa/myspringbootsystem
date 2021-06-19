@@ -148,7 +148,7 @@
                                 </thead>
 
                                 <tbody >
-                                <tr  th:each="dailyinfo:${dailyinfos}" >
+                                <tr  th:each="dailyinfo:${pageInfo.getList()}" >
                                     <td th:text="${dailyinfo.getId()}"></td>
                                     <td th:text="${#dates.format(dailyinfo.getFillingDate(),'yyyy-MM-dd hh:mm:ss')}"></td>
                                     <td th:text="${dailyinfo.getFill()==1?'是':'否'}"></td>
@@ -170,52 +170,59 @@
 
 
 
-                            <div class="modal-footer" th:if="${pageInfo} ne null">
-                                <div class="col-md-6" >
-                                    当前第 [[${pageInfo.pageNum}]]页,共 [[${pageInfo.pages}]] 页.一共 [[${pageInfo.total}]] 条记录
-                                </div>
-                                <ul class="pagination pull-right no-margin">
-                                    <li th:if="${pageInfo.hasPreviousPage}">
-                                        <a th:onclick="|selectf('1')|" >首页</a>
-                                    </li>
-
-                                    <li class="prev" th:if="${pageInfo.hasPreviousPage}">
-                                        <a th:onclick="|selectf('${pageInfo.prePage}')|">
-                                            <i class="ace-icon fa fa-angle-double-left"></i>
-                                        </a>
-                                    </li>
-                                    <!--遍历条数-->
-                                    <li th:each="nav:${pageInfo.navigatepageNums}">
-                                        <a th:onclick="|selectf('${nav}')|"  th:text="${nav}" th:if="${nav != pageInfo.pageNum}"></a>
-                                        <span style="font-weight: bold;background: #6faed9;" th:if="${nav == pageInfo.pageNum}" th:text="${nav}" ></span>
-                                    </li>
-
-                                    <li class="next" th:if="${pageInfo.hasNextPage}">
-                                        <a th:onclick="|selectf('${pageInfo.nextPage}')|">
-                                            <i class="ace-icon fa fa-angle-double-right"></i>
-                                        </a>
-                                    </li>
-
-                                    <li>
-                                        <a th:onclick="|selectf('${pageInfo.pages}')|">尾页</a>
-                                    </li>
-                                </ul>
-                            </div>
+                            </ul>
                         </div>
-                </div>
-            </div>
-            <footer class="py-4 bg-light mt-auto">
-                <div class="container-fluid">
-                    <div class="d-flex align-items-center justify-content-between small">
-                        <div class="text-muted">Copyright &copy; Your Website 2021</div>
-                        <div>
-                            <a href="#">Privacy Policy</a>
-                            &middot;
-                            <a href="#">Terms &amp; Conditions</a>
+                    <div class="modal-footer no-margin-top" >
+                        <div class="col-md-6">
+                            当前第 [[${pageInfo.pageNum}]]页,共 [[${pageInfo.pages}]] 页.一共 [[${pageInfo.total}]] 条记录
                         </div>
+                        <ul class="pagination pull-right no-margin">
+                            <li th:if="${pageInfo.hasPreviousPage}">
+                                <a th:href="'/user/teacher/dailyinfo/global?pageNum=1'">首页</a>
+                            </li>
+
+                            <li class="prev" th:if="${pageInfo.hasPreviousPage}">
+                                <a th:href="'/user/teacher/dailyinfo/global?pageNum='+${pageInfo.prePage}">
+                                    <i class="ace-icon fa fa-angle-double-left"></i>
+                                </a>
+                            </li>
+                            <!--遍历条数-->
+                            <li th:each="nav:${pageInfo.navigatepageNums}">
+                                <a th:href="'/user/teacher/dailyinfo/global?pageNum='+${nav}" th:text="${nav}"
+                                   th:if="${nav != pageInfo.pageNum}"></a>
+                                <span style="font-weight: bold;background: #6faed9;" th:if="${nav == pageInfo.pageNum}"
+                                      th:text="${nav}"></span>
+                            </li>
+
+                            <li class="next" th:if="${pageInfo.hasNextPage}">
+                                <a th:href="'/user/teacher/dailyinfo/global?pageNum='+${pageInfo.nextPage}">
+                                    <i class="ace-icon fa fa-angle-double-right"></i>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a th:href="'/user/teacher/dailyinfo/global?pageNum='+${pageInfo.pages}">尾页</a>
+                            </li>
+
                     </div>
+
+                    <div>当前页号：<span th:text="${pageInfo.pageNum}"></span></div>
+                    <div>每页条数：<span th:text="${pageInfo.pageSize}"></span></div>
+                    <div>起始行号：<span th:text="${pageInfo.startRow}"></span></div>
+                    <div>终止行号：<span th:text="${pageInfo.endRow}"></span></div>
+                    <div>总结果数：<span th:text="${pageInfo.total}"></span></div>
+                    <div>总页数：<span th:text="${pageInfo.pages}"></span></div>
+                    <hr />
+                    <div>是否为第一页：<span th:text="${pageInfo.isFirstPage}"></span></div>
+                    <div>是否为最后一页：<span th:text="${pageInfo.isLastPage}"></span></div>
+                    <div>是否有前一页：<span th:text="${pageInfo.hasPreviousPage}"></span></div>
+                    <div>是否有下一页：<span th:text="${pageInfo.hasNextPage}"></span></div>
                 </div>
-            </footer>
+                <footer class="py-4 bg-light mt-auto">
+                    <div class="container-fluid">
+                        
+                    </div>
+                </footer>
         </main>
     </div>
     </div>

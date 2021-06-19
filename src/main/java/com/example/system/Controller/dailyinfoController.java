@@ -48,20 +48,44 @@ public class dailyinfoController {
     @Autowired
     WhiteListExcelService whiteListExcelService;
     @RequestMapping("/user/teacher/dailyinfo/global")
-    public String gloabalfresh(Model model,HttpServletRequest request){
-        HttpSession session = request.getSession();       // 获取登录信息
-        Object obj = session.getAttribute("username");
-        if (obj == null) {     // 登录信息为 null，表示没有登录
-            return "redirect:/login";
+    public String gloabalfresh(Model model,HttpServletRequest request,
+                               @RequestParam(required = false, defaultValue = "1", value = "pageNum") Integer pageNum,
+                               @RequestParam(defaultValue = "5", value = "pageSize") Integer pageSize){
+        if (pageNum == null) {
+            pageNum = 1;   //设置默认当前页
         }
-        Object obj1 = session.getAttribute("identity");
-        String loginIdentity = (String) obj1;                    // 强制转换成 String
-        // 如果权限不足就返回主界面
-        if (loginIdentity.equals("0")) {
-            return "redirect:/index";
+        if (pageNum <= 0) {
+            pageNum = 1;
         }
-        model.addAttribute("dailyinfos",null);
-        model.addAttribute("pageInfo", null);
+        if (pageSize == null) {
+            pageSize = 5;    //设置默认每页显示的数据数
+        }
+
+        PageHelper.startPage(pageNum, pageSize);
+        try {
+            HttpSession session = request.getSession();       // 获取登录信息
+            Object obj = session.getAttribute("username");
+            if (obj == null) {     // 登录信息为 null，表示没有登录
+                return "redirect:/login";
+            }
+            Object obj1 = session.getAttribute("identity");
+            String loginIdentity = (String) obj1;                    // 强制转换成 String
+            // 如果权限不足就返回主界面
+            if (loginIdentity.equals("0")) {
+                return "redirect:/index";
+            }
+            String loginname = (String) obj;
+            int loginId = Integer.parseInt(loginname);
+            List<Dailyinfo> dailyinfos=dailyinfoService.queryAll();
+
+//            System.out.println("分页数据"+dailyinfos);
+            PageInfo<Dailyinfo> pageInfo = new PageInfo<Dailyinfo>(dailyinfos, pageSize);
+            model.addAttribute("pageInfo", pageInfo);
+        } finally {
+            PageHelper.clearPage();
+        }
+
+
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         model.addAttribute("maxDate",simpleDateFormat.format(dailyinfoService.getMaxDate()));
         model.addAttribute("minDate",simpleDateFormat.format(dailyinfoService.getMinDate()));
@@ -108,7 +132,7 @@ public class dailyinfoController {
 
     //学生日常信息填报查询
     @RequestMapping("/user/dailyinfo/querry")
-    public String gloabalfresh(Model model,HttpServletRequest request,
+    public String dailyquerry(Model model,HttpServletRequest request,
                                @RequestParam(required = false, defaultValue = "1", value = "pageNum") Integer pageNum,
                                @RequestParam(defaultValue = "5", value = "pageSize") Integer pageSize){
         String identity;

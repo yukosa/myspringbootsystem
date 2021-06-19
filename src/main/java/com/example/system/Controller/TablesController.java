@@ -10,6 +10,8 @@ package com.example.system.Controller;
 //import com.yjh.pojo.DailyinfoExcel;
 import com.example.system.bean.Dailyinfo;
 import com.example.system.service.DailyinfoService;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,7 +20,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.URLEncoder;
@@ -36,9 +40,43 @@ public class TablesController {
 //    DailyinfoExcelMapper dailyinfoExcelMapper;
 
     @RequestMapping("/tables")
-    public String queryAll(Model model){
-        List<Dailyinfo> dailyinfos=dailyinfoService.queryAll();
-        model.addAttribute("dailyinfos",dailyinfos);
+    public String queryAll(Model model,HttpServletRequest request,
+                           @RequestParam(required = false, defaultValue = "1", value = "pageNum") Integer pageNum,
+                           @RequestParam(defaultValue = "5", value = "pageSize") Integer pageSize){
+        if (pageNum == null) {
+            pageNum = 1;   //设置默认当前页
+        }
+        if (pageNum <= 0) {
+            pageNum = 1;
+        }
+        if (pageSize == null) {
+            pageSize = 5;    //设置默认每页显示的数据数
+        }
+
+        PageHelper.startPage(pageNum, pageSize);
+        try {
+            HttpSession session = request.getSession();       // 获取登录信息
+            Object obj = session.getAttribute("username");
+            if (obj == null) {     // 登录信息为 null，表示没有登录
+                return "redirect:/login";
+            }
+            Object obj1 = session.getAttribute("identity");
+            String loginIdentity = (String) obj1;                    // 强制转换成 String
+            // 如果权限不足就返回主界面
+            if (loginIdentity.equals("0")) {
+                return "redirect:/index";
+            }
+            String loginname = (String) obj;
+            int loginId = Integer.parseInt(loginname);
+            List<Dailyinfo> dailyinfos=dailyinfoService.queryAll();
+
+//            System.out.println("分页数据"+dailyinfos);
+            PageInfo<Dailyinfo> pageInfo = new PageInfo<Dailyinfo>(dailyinfos, pageSize);
+            model.addAttribute("pageInfo", pageInfo);
+        } finally {
+            PageHelper.clearPage();
+        }
+
         return "/tables";
     }
 

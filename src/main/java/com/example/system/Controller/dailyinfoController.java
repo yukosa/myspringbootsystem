@@ -76,7 +76,8 @@ public class dailyinfoController {
             }
             String loginname = (String) obj;
             int loginId = Integer.parseInt(loginname);
-            List<Dailyinfo> dailyinfos=dailyinfoService.queryAll();
+            List<Dailyinfo> dailyinfos= dailyinfoService.queryAll();
+            model.addAttribute("dailyinfos",dailyinfos);
 
 //            System.out.println("分页数据"+dailyinfos);
             PageInfo<Dailyinfo> pageInfo = new PageInfo<Dailyinfo>(dailyinfos, pageSize);

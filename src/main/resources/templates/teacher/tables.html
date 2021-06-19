@@ -112,7 +112,7 @@
                             <option value="12">是否与确诊/无症状感染者行程轨迹交叉</option>
                             <option value="13">是否中高风险地区旅居史</option>
                             <option value="14">是否中高风险地区人员接触</option>
-                            <option value="16">是否返校</option>
+                            <option value="15">是否返校</option>
                         </select>
                     <label id="missinfo" class="text-danger" for="selectmenu" style="display: none"></label>
                 </div>
@@ -148,7 +148,7 @@
                                 </thead>
 
                                 <tbody >
-                                <tr  th:each="dailyinfo:${pageInfo.getList()}" >
+                                <tr  th:each="dailyinfo:${dailyinfos}" >
                                     <td th:text="${dailyinfo.getId()}"></td>
                                     <td th:text="${#dates.format(dailyinfo.getFillingDate(),'yyyy-MM-dd hh:mm:ss')}"></td>
                                     <td th:text="${dailyinfo.getFill()==1?'是':'否'}"></td>
@@ -220,7 +220,7 @@
                 </div>
                 <footer class="py-4 bg-light mt-auto">
                     <div class="container-fluid">
-                        
+
                     </div>
                 </footer>
         </main>
@@ -263,7 +263,7 @@
                         }
                     }else{
                         for(var i = 0; i < select.length;i++) {
-                            showTable(select[i]);
+                            showTable(select[i]-1);
                         }
                     }
                 })
